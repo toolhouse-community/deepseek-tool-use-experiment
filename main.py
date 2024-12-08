@@ -1,0 +1,45 @@
+from starlette.applications import Starlette
+from starlette.responses import Response, JSONResponse
+from starlette.routing import Route
+from starlette.routing import Mount
+from starlette.staticfiles import StaticFiles
+from starlette.middleware import Middleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.types import ASGIApp, Receive, Scope, Send
+from api.chat.post import post_chat
+import dotenv
+import os
+
+dotenv.load_dotenv()
+
+
+class DisableCacheMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        response = await call_next(request)
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
+
+
+async def homepage(request):
+    return JSONResponse({"hello": "world"})
+
+
+# Determine middleware and debug based on environment
+middleware = (
+    [Middleware(DisableCacheMiddleware)]
+    if os.environ.get("ENVIRONMENT") == "development"
+    else []
+)
+debug = os.environ.get("ENVIRONMENT") == "development"
+
+app = Starlette(
+    debug=debug,
+    middleware=middleware,
+    routes=[
+        Route("/api", homepage),
+        Route("/chat", post_chat, methods=["POST"]),
+        Mount("/", StaticFiles(directory="static", html=True), name="static"),
+    ],
+)

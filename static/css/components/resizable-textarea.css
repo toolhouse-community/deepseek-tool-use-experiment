@@ -1,0 +1,12 @@
+#auto-resize-textbox {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  font-family: cinetype;
+  color: inherit;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  outline: none;
+}

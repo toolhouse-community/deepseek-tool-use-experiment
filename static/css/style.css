@@ -1,0 +1,168 @@
+@font-face {
+  font-family: ibmvga8;
+  src: url('/fonts/WebPlus_IBM_VGA_8x16.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: cinetype;
+  src: url('/fonts/GT-Cinetype-Mono.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Unified font application */
+html * {
+  font-family: cinetype, monospace;
+}
+
+body {
+  background-color: #000;
+  color: #5f8b6b;  /* MS-DOS prompt style grey-green */
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 60%;
+  margin: 0 auto;
+}
+
+/* Text Styles */
+h1, h2, h3, h4, h5, h6 {
+  color: #5f8b6b;
+  text-shadow: 0 0 2px #000;
+}
+
+p, span, a {
+  color: #aaa;
+}
+
+a {
+  text-decoration: none;
+  border-bottom: 1px dotted #5f8b6b;
+}
+
+a:hover {
+  color: #7fa080;
+}
+
+/* UI Element Styles */
+button, input[type="button"], input[type="submit"] {
+  background-color: #333;
+  color: #5f8b6b;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+  background-color: #444;
+}
+
+input[type="text"], input[type="password"], textarea {
+  background-color: #222;
+  color: #5f8b6b;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+/* Table Styles */
+table {
+  background-color: #222;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  color: #5f8b6b;
+  padding: 0.5rem;
+  border: 1px solid #444;
+}
+
+th {
+  background-color: #333;
+}
+
+/* List Styles */
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0.5rem;
+  border-bottom: 1px solid #444;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+/* Code Block Styles */
+code {
+  background-color: #222;
+  color: #5f8b6b;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+pre {
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+pre code {
+  background-color: transparent;
+}
+
+#auto-resize-textbox {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: transparent;
+  font-family: cinetype;
+  color: inherit;
+  overflow-y: hidden;
+  box-sizing: border-box;
+  outline: none;
+}
+
+main-app {
+  height: calc(100vh - 54px - 38px);
+  display: flex;
+  flex-direction: column;
+}
+
+chat-history-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+chat-history-container div {
+  border-radius: 8px;
+  margin: 0.5rem 0 1rem;
+  padding: 1rem;
+  color: #ccc;
+}
+
+chat-history-container div.user {
+  margin-left: 40%;
+  background: #08f;
+}
+
+chat-history-container div.assistant {
+  background: #111;
+  margin-right: 40%;
+}
+
+resizable-texarea {
+  flex: 1;
+  max-height: 200px;
+}
