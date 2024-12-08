@@ -9,7 +9,9 @@ export class ChatHistoryContainer extends Domo {
     const msgs = this.getHistory().map(({role, content}) =>
       html`<div class="${role}">${Array.isArray(content) ? content.find(c => c.type === 'text').text : content}</div>`
     );
-    if (this.getStream()) {
+    if (this.thinking()) {
+      msgs.push(html`<div class="assistant">Thinking…</div>`)
+    } else if (this.getStream()) {
       msgs.push(html`<div class="assistant">${this.getStream()}</div>`)
     }
 

@@ -7,89 +7,83 @@ export class MainApp extends Domo {
   }
 
   getInitialState() {
-    this.process()
+    this.setupStream()
 
     return { 
-      messages: [
-        {
-          role: 'user',
-          message: 'hello'
-        },
-        {
-          role: 'assistant',
-          message: 'world',
-        }
-      ], 
+      messages: [], 
+      thinking: false,
       streamingResponse: ''
     };
   }
 
-  async messageCallback(value) {
-    console.log(value.trim())
-  }
-
-  
-  process() {
+  setupStream() {
     // Usage example:
-    const processor = new StreamProcessor('https://0.0.0.0:8000/api/chat');
+    this.processor = new StreamProcessor('https://0.0.0.0:8000/api/chat');
     
     // Add event listeners
-    processor.addEventListener('chunk', (event) => {
+    this.processor.addEventListener('chunk', (event) => {
       // console.log('Chunk received:', event.detail);
-      this.setState({streamingResponse: this.state.streamingResponse + event.detail})
+      this.setState({thinking: false, streamingResponse: this.state.streamingResponse + event.detail})
     });
     
-    processor.addEventListener('end', (event) => {
+    this.processor.addEventListener('end', (event) => {
       console.log('Stream ended:', JSON.parse(event.detail));
       this.setState({streamingResponse : '', messages: JSON.parse(event.detail)})
     });
     
-    processor.addEventListener('error', (event) => {
+    this.processor.addEventListener('error', (event) => {
       // console.error('Error occurred:', event.detail);
     });
-    
+  }
+
+  handleMessageSubmission(value) {
+    if (value.trim().length === 0) {
+      return
+    }
+    const messages = this.state.messages;
+    messages.push({ "role": "user", "content": value.trim()})
+    this.setState({messages: messages, thinking: true});
     // Start processing with some data
     const postData = {
       model: 'claude-3-5-sonnet-latest',
-      messages: [
-        {"role": "user", "content": "hello, can you tell me a little bit about you?"}
-      ]
+      messages: this.state.messages
     };
     
     // Process the stream and collect results
-    processor.processStream(postData)
-    .then(stream => {
-      const chunks = [];
+    this.processor.processStream(postData)
+    // .then(stream => {
+    //   const chunks = [];
       
-      return new Promise((resolve, reject) => {
-        stream.pipeTo(new WritableStream({
-          write(chunk) {
-            chunks.push(chunk);
-          },
-          close() {
-            resolve(chunks);
-          },
-          abort(err) {
-            reject(err);
-          }
-        }));
-      });
-    })
-    .then(results => {
-      // console.log('All chunks processed:', results);
-    })
-    .catch(error => {
-      // console.error('Stream processing failed:', error);
-    });
+    //   return new Promise((resolve, reject) => {
+    //     stream.pipeTo(new WritableStream({
+    //       write(chunk) {
+    //         chunks.push(chunk);
+    //       },
+    //       close() {
+    //         resolve(chunks);
+    //       },
+    //       abort(err) {
+    //         reject(err);
+    //       }
+    //     }));
+    //   });
+    // })
+    // .then(results => {
+    //   // console.log('All chunks processed:', results);
+    // })
+    // .catch(error => {
+    //   // console.error('Stream processing failed:', error);
+    // });
   }
   
   getMessages() {return this.state.messages}
   getStreamingResponse() {return this.state.streamingResponse}
+  thinking() {return this.state.thinking}
   
   render() {
     return html`
-      <chat-history-container cb-get-history=${this.getMessages} cb-get-stream=${this.getStreamingResponse}/>
-      <resizable-textarea cb-enter-handler=${this.messageCallback} />
+      <chat-history-container data-len="${this.state.messages.length}" cb-thinking=${this.thinking} cb-get-history=${this.getMessages} cb-get-stream=${this.getStreamingResponse}/>
+      <resizable-textarea cb-enter-handler=${this.handleMessageSubmission} />
     `;
   }
 }
