@@ -39,7 +39,7 @@ app = Starlette(
     middleware=middleware,
     routes=[
         Route("/api", homepage),
-        Route("/chat", post_chat, methods=["POST"]),
+        Route("/api/chat", post_chat, methods=["POST"]),
         Mount("/", StaticFiles(directory="static", html=True), name="static"),
     ],
 )

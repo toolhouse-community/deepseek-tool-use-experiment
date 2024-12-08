@@ -6,8 +6,13 @@ export class ChatHistoryContainer extends Domo {
   }
 
   render() {
-    return this.getHistory().map(({role, message}) =>
-      html`<div class="${role}">${message}</div>`
+    const msgs = this.getHistory().map(({role, content}) =>
+      html`<div class="${role}">${Array.isArray(content) ? content.find(c => c.type === 'text').text : content}</div>`
     );
+    if (this.getStream()) {
+      msgs.push(html`<div class="assistant">${this.getStream()}</div>`)
+    }
+
+    return msgs;
   }
 }

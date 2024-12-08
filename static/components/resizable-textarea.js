@@ -3,8 +3,6 @@ import Domo, {html} from '/domo.js';
 export class ResizableTextarea extends Domo {
   constructor(component) {
     super(component);
-    this.textbox = this.querySelector('#auto-resize-textbox');
-    this.initialHeight = this.textbox.initialHeight + 'px';
   }
   
   autoResizeTextbox(e) {
@@ -27,6 +25,11 @@ export class ResizableTextarea extends Domo {
       e.target.selectionStart = e.target.selectionEnd = e.target.value.length;
       this.autoResizeTextbox(e);
     }
+  }
+
+  componentDidRender() {
+    this.textbox = this.querySelector('#auto-resize-textbox');
+    this.initialHeight = this.textbox.initialHeight + 'px';
   }
   
   render() {
