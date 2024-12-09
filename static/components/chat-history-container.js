@@ -15,7 +15,31 @@ export class ChatHistoryContainer extends Domo {
     this.animations = new Set()
   }
 
-  makeHtml(role, content, key) {
+  makeHtml(chat) {
+    switch (this.dataset.provider) {
+      case 'anthropic':
+        return this.makeHtmlAnthropic(chat.role, chat.content);
+      case 'openai':
+        return this.makeHtmlOpenAI(chat);
+    }
+  }
+
+  makeHtmlOpenAI({ role, content, tool_calls}) {
+    if (content) {
+      return html`<div class="${role}">${this.md.makeHtml(content)}</div>`;
+    } else if (Array.isArray(tool_calls)) {
+      const bubbles = tool_calls.map((c) =>
+        `<div class="${role}">
+          <h4>Using tools</h4>
+          <p>${c.function.name}(${c.function.arguments != '{}' ? c.function.arguments : ''})</p>
+        </div>`
+      ).join('');
+
+      return html`${bubbles}`;
+    }
+  }
+
+  makeHtmlAnthropic(role, content) {
     let bubbles = '';
     if (Array.isArray(content)) {
       content.forEach((c) => {
@@ -47,9 +71,8 @@ export class ChatHistoryContainer extends Domo {
   render() {
     const msgs = this.getHistory()
       .filter(({role}) => ['user', 'assistant'].includes(role))
-      .map(({role, content}, key) => {
-        console.log('content:', content)
-        return this.makeHtml(role, content, key);
+      .map((chat) => {
+        return this.makeHtml(chat);
       });
     if (this.thinking()) {
       msgs.push(html`<div class="fade-slide assistant"><p>Thinking…</p></div>`)

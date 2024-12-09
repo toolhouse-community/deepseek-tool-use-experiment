@@ -4,6 +4,7 @@ import {StreamProcessor} from '/lib/stream.js';
 export class MainApp extends Domo {
   constructor(component) {
     super(component);
+    this.model = 'claude-3-5-sonnet-latest';
   }
 
   getInitialState() {
@@ -45,7 +46,7 @@ export class MainApp extends Domo {
     this.setState({messages: messages, thinking: true});
     // Start processing with some data
     const postData = {
-      model: 'claude-3-5-sonnet-latest',
+      model: this.model,
       messages: this.state.messages,
     };
     
@@ -59,6 +60,7 @@ export class MainApp extends Domo {
   render() {
     return html`
       <chat-history-container 
+        data-provider="${this.model.indexOf('claude') > -1 ? 'anthropic' : 'openai'}"
         data-len="${this.state.messages.length}" 
         cb-thinking=${this.thinking} 
         cb-get-history=${this.getMessages} 
