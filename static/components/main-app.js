@@ -19,7 +19,7 @@ export class MainApp extends Domo {
 
   setupStream() {
     // Usage example:
-    this.processor = new StreamProcessor('https://0.0.0.0:8000/api/chat');
+    this.processor = new StreamProcessor('/api/chat');
     
     // Add event listeners
     this.processor.addEventListener('chunk', (event) => {
