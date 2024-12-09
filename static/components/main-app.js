@@ -1,5 +1,5 @@
 import Domo, {html} from '/domo.js';
-import {StreamProcessor} from '/lib/stream.js';
+import {StreamProcessor} from '/helpers/stream.js';
 
 export class MainApp extends Domo {
   constructor(component) {
