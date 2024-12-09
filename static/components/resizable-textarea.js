@@ -30,6 +30,9 @@ export class ResizableTextarea extends Domo {
   componentDidRender() {
     this.textbox = this.querySelector('#auto-resize-textbox');
     this.initialHeight = this.textbox.initialHeight + 'px';
+    setTimeout(() => {
+      this.textbox.focus();
+    }, 100);
   }
   
   render() {

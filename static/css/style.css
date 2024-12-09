@@ -12,6 +12,25 @@
   font-style: normal;
 }
 
+@keyframes fadeAndSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-slide {
+  animation: fadeAndSlide 0.3s ease-out forwards;
+}
+
+.animate-delay {
+  animation-delay: 0.3s;
+}
+
 /* Unified font application */
 html * {
   font-family: cinetype, monospace;
@@ -136,19 +155,27 @@ main-app {
   height: calc(100vh - 54px - 38px);
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Add this */
 }
 
 chat-history-container {
-  flex: 2;
+  flex: 1 1 auto; /* Change from flex: 2 */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 100%; /* Add this */
 }
+
+/* resizable-textarea {
+  flex: 0 0 auto;
+  max-height: 200px;
+} */
 
 chat-history-container div {
   border-radius: 8px;
   margin: 0.5rem 0 1rem;
-  padding: 1rem;
+  padding: 0 1rem;
   color: #ccc;
 }
 
@@ -157,8 +184,16 @@ chat-history-container div.user {
   background: #08f;
 }
 
+chat-history-container div.assistant p {
+  color: #c8c8c8;
+}
+
+chat-history-container div.user p {
+  color: #eee;
+}
+
 chat-history-container div.assistant {
-  background: #111;
+  background: #181818;
   margin-right: 40%;
 }
 

@@ -46,34 +46,10 @@ export class MainApp extends Domo {
     // Start processing with some data
     const postData = {
       model: 'claude-3-5-sonnet-latest',
-      messages: this.state.messages
+      messages: this.state.messages,
     };
     
-    // Process the stream and collect results
-    this.processor.processStream(postData)
-    // .then(stream => {
-    //   const chunks = [];
-      
-    //   return new Promise((resolve, reject) => {
-    //     stream.pipeTo(new WritableStream({
-    //       write(chunk) {
-    //         chunks.push(chunk);
-    //       },
-    //       close() {
-    //         resolve(chunks);
-    //       },
-    //       abort(err) {
-    //         reject(err);
-    //       }
-    //     }));
-    //   });
-    // })
-    // .then(results => {
-    //   // console.log('All chunks processed:', results);
-    // })
-    // .catch(error => {
-    //   // console.error('Stream processing failed:', error);
-    // });
+    this.processor.processStream(postData);
   }
   
   getMessages() {return this.state.messages}
@@ -82,7 +58,12 @@ export class MainApp extends Domo {
   
   render() {
     return html`
-      <chat-history-container data-len="${this.state.messages.length}" cb-thinking=${this.thinking} cb-get-history=${this.getMessages} cb-get-stream=${this.getStreamingResponse}/>
+      <chat-history-container 
+        data-len="${this.state.messages.length}" 
+        cb-thinking=${this.thinking} 
+        cb-get-history=${this.getMessages} 
+        cb-get-stream=${this.getStreamingResponse}
+      />
       <resizable-textarea cb-enter-handler=${this.handleMessageSubmission} />
     `;
   }
