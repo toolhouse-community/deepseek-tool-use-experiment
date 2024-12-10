@@ -64,7 +64,7 @@ If all look good to you, respond with <valid/>. If something does not look right
 '''
 
 [prompts.save_settings]
-text = "Save my email and my valid meal preferences in memory using memory_store. Once done, respond with <stored/>"
+text = 'Save my email and my valid meal preferences in memory using memory_store. Once done, respond with <stored/>'
 
 [prompts.main]
 text = """

@@ -79,7 +79,11 @@ export class MainApp extends Domo {
   
   render() {
     return html`
-      <h1>${config.main.title}</h1>
+      <div style="display: flex">
+        <utensils-crossed-icon style="margin-right: 1em " />
+        <h1 style="flex:1">${config.main.title}</h1>
+      </div>
+      
       <p>${config.main.description}</p>
       <preferences-form 
         data-hidden="${this.state.formIsHidden || this.state.configured}"

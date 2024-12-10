@@ -302,3 +302,8 @@ action-box button b {
   display: block;
   color: #fff;
 }
+
+svg.icon {
+  color: #08f;
+  width: 2em;
+}
