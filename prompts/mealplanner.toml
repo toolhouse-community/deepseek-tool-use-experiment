@@ -1,4 +1,5 @@
 [main]
+model = "gpt-4o-mini"
 title = "My meal planner"
 description = "I will help you prepare a meal plan for the week based on your preferences."
 

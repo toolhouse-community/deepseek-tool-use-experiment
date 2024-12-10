@@ -10,6 +10,8 @@ export class ChatHistoryContainer extends Domo {
       underline: true,
       strikethrough: true,
       backslashEscapesHTMLTags: true,
+      ghMentions: false,
+      ghMentionsLink: '/#',
       extensions: [{
         type: 'lang',
         filter: (text, converter, options) => {

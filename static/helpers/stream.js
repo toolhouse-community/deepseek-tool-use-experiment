@@ -6,8 +6,9 @@ export class StreamProcessor extends EventTarget {
   
   async processStream(postData) {
     try {
-      if (localStorage.getItem('email')) {
-        postData.email = localStorage.getItem();
+      const email = localStorage.getItem('email');
+      if (email) {
+        postData.email = email;
       }
       
       const response = await fetch(this.url, {

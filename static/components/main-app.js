@@ -4,7 +4,7 @@ import {StreamProcessor} from '/helpers/stream.js';
 export class MainApp extends Domo {
   constructor(component) {
     super(component);
-    this.model = 'claude-3-5-sonnet-latest';
+    this.firstRender = true;
   }
 
   getInitialState() {
@@ -16,6 +16,7 @@ export class MainApp extends Domo {
       streamingResponse: '',
       formIsHidden: false,
       email: localStorage.getItem('email') ?? '',
+      configured: !!localStorage.getItem('configured') || false,
     };
   }
 
@@ -31,8 +32,10 @@ export class MainApp extends Domo {
       this.setState({streamingResponse : '', messages: messages});
       if (lastMessage.includes('<valid/>')) {
         this.handleMessageSubmission(config.prompts.save_settings.text);
-      } else if (lastMessage.includes('<stored/>')) {
         localStorage.setItem('email', this.state.email);
+      } else if (lastMessage.includes('<stored/>')) {
+        localStorage.setItem('configured', 'true');
+        this.setState({ configred: true });
       }
     });
 
@@ -51,7 +54,6 @@ export class MainApp extends Domo {
     this.setState({messages: messages, thinking: true});
 
     const postData = {
-      model: this.model,
       messages: this.state.messages,
     };
     
@@ -70,24 +72,32 @@ export class MainApp extends Domo {
     this.setState({ formIsHidden: true, email: email });
     this.handleMessageSubmission(prompt);
   }
+
+  componentDidRender() {
+    this.firstRender = false;
+  }
   
   render() {
     return html`
       <h1>${config.main.title}</h1>
       <p>${config.main.description}</p>
       <preferences-form 
-        data-hidden="${this.state.formIsHidden || this.state.email !== ''}"
+        data-hidden="${this.state.formIsHidden || this.state.configured}"
         cb-submit=${this.submitPreferences}
       />
-      ${this.state.email !== '' ? `<success-message />` : ''}
+      ${this.state.configured && this.firstRender ? `<success-message />` : ''}
       <chat-history-container 
-        data-provider="${this.model.indexOf('claude') > -1 ? 'anthropic' : 'openai'}"
+        data-provider="${config.main.model.indexOf('claude') > -1 ? 'anthropic' : 'openai'}"
         data-len="${this.state.messages.length}" 
         cb-thinking=${this.thinking} 
         cb-get-history=${this.getMessages} 
         cb-get-stream=${this.getStreamingResponse}
       />
-      <action-box data-hidden="${this.state.email === ''}" />
+      <action-box 
+        class="${this.firstRender ? 'fade-slide' : 'fade-out'}"
+        data-hidden="${this.state.configured === false || this.firstRender === false}"
+        cb-action-handler=${this.handleMessageSubmission}
+      />
       <resizable-textarea 
         cb-enter-handler=${this.handleMessageSubmission} 
       />

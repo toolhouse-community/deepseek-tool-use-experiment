@@ -16,6 +16,16 @@
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
 @keyframes blink {
   0% {
     opacity: 1; /* Starting with a faint opacity to simulate old monitor effect */
@@ -37,6 +47,10 @@
 
 .fade-slide {
   animation: fadeAndSlide 0.3s ease-out forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease-out forwards;
 }
 
 .animate-delay {
@@ -196,10 +210,9 @@ chat-history-container {
   max-height: 100%; /* Add this */
 }
 
-/* resizable-textarea {
-  flex: 0 0 auto;
-  max-height: 200px;
-} */
+chat-history-container img {
+  max-width: 100%;
+}
 
 chat-history-container div {
   border-radius: 8px;
