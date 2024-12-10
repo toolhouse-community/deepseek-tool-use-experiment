@@ -15,6 +15,7 @@ export class MainApp extends Domo {
       thinking: false,
       streamingResponse: '',
       formIsHidden: false,
+      email: localStorage.getItem('email') ?? '',
     };
   }
 
@@ -30,6 +31,8 @@ export class MainApp extends Domo {
       this.setState({streamingResponse : '', messages: messages});
       if (lastMessage.includes('<valid/>')) {
         this.handleMessageSubmission(config.prompts.save_settings.text);
+      } else if (lastMessage.includes('<stored/>')) {
+        localStorage.setItem('email', this.state.email);
       }
     });
 
@@ -64,7 +67,7 @@ export class MainApp extends Domo {
     const prompt = config.prompts.check_settings.text
       .replace('{email}', email)
       .replace('{preferences}', preferences);
-    this.setState({ formIsHidden: true });
+    this.setState({ formIsHidden: true, email: email });
     this.handleMessageSubmission(prompt);
   }
   
@@ -73,9 +76,10 @@ export class MainApp extends Domo {
       <h1>${config.main.title}</h1>
       <p>${config.main.description}</p>
       <preferences-form 
-        data-hidden="${this.state.formIsHidden.toString()}"
+        data-hidden="${this.state.formIsHidden || this.state.email !== ''}"
         cb-submit=${this.submitPreferences}
       />
+      ${this.state.email !== '' ? `<success-message />` : ''}
       <chat-history-container 
         data-provider="${this.model.indexOf('claude') > -1 ? 'anthropic' : 'openai'}"
         data-len="${this.state.messages.length}" 
@@ -83,6 +87,7 @@ export class MainApp extends Domo {
         cb-get-history=${this.getMessages} 
         cb-get-stream=${this.getStreamingResponse}
       />
+      <action-box data-hidden="${this.state.email === ''}" />
       <resizable-textarea 
         cb-enter-handler=${this.handleMessageSubmission} 
       />

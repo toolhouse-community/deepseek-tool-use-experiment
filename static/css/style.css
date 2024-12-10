@@ -1,11 +1,4 @@
 @font-face {
-  font-family: ibmvga8;
-  src: url('/fonts/WebPlus_IBM_VGA_8x16.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: cinetype;
   src: url('/fonts/GT-Cinetype-Mono.woff') format('woff');
   font-weight: normal;
@@ -23,6 +16,25 @@
   }
 }
 
+@keyframes blink {
+  0% {
+    opacity: 1; /* Starting with a faint opacity to simulate old monitor effect */
+  }
+  50% {
+    opacity: 1; /* Fully opaque at the midpoint */
+  }
+  51% {
+    opacity: 0.5; /* Fully opaque at the midpoint */
+  }
+  100% {
+    opacity: 0.1; /* Ending with a faint opacity */
+  }
+}
+
+.blink {
+  animation: blink 1.5s infinite;
+}
+
 .fade-slide {
   animation: fadeAndSlide 0.3s ease-out forwards;
 }
@@ -31,9 +43,9 @@
   animation-delay: 0.3s;
 }
 
-/* Unified font application */
 html * {
   font-family: cinetype, monospace;
+  overscroll-behavior: none;
 }
 
 body {
@@ -45,7 +57,6 @@ body {
   margin: 0 auto;
 }
 
-/* Text Styles */
 h1, h2, h3, h4, h5, h6 {
   color: #08f;
   text-shadow: 0 0 2px #000;
@@ -80,7 +91,6 @@ form textarea {
   resize: none;
 }
 
-/* UI Element Styles */
 button, input[type="button"], input[type="submit"] {
   background-color: #1f96ff;
   color: #fff;
@@ -130,16 +140,8 @@ th {
   background-color: #333;
 }
 
-/* List Styles */
-ul, ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
 li {
   padding: 0.5rem;
-  border-bottom: 1px solid #444;
 }
 
 li:last-child {
@@ -216,10 +218,12 @@ chat-history-container div.assistant {
   margin-right: 40%;
 }
 
+.success,
 chat-history-container div.assistant.success {
   background: #3E8E41;
 }
 
+.error,
 chat-history-container div.assistant.error {
   background: hsl(0, 64%, 42%);
 }
@@ -244,9 +248,44 @@ chat-history-container div.user p {
   color: #eee;
 }
 
-
-
 resizable-texarea {
   flex: 1;
   max-height: 200px;
+}
+
+success-message {
+  background: #08f;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 5px;
+}
+
+success-message h1 {
+  color: #fff;
+}
+
+success-message p {
+  color: #c8c8c8;
+}
+
+action-box {
+  /* display: flex;
+  flex-wrap: wrap; */
+  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 1rem 0;
+}
+
+action-box button {
+  /* flex-basis: calc(50% - 10px);
+  max-width: calc(50% - 10px); */
+  text-align: left;
+  color: #c8c8c8;
+  padding: 1rem;
+}
+
+action-box button b {
+  display: block;
+  color: #fff;
 }

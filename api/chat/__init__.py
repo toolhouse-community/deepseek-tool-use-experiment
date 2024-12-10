@@ -16,12 +16,17 @@ event: {event}
 """
 
 
-async def generate_stream(messages: list, model: str, bundle: str = "default"):
+async def generate_stream(
+    messages: list, model: str, bundle: str = "default", email: str | None = None
+):
     try:
         current_messages = messages.copy()
         history = messages.copy()
         provider = get_model(model).get("provider")
         th = Toolhouse(provider=provider)
+        if email:
+            th.set_metadata("id", email)
+
         tools = th.get_tools(bundle)
         tool_results = []
 
@@ -115,6 +120,7 @@ async def post(request: Request):
             messages=data.get("messages"),
             model=data.get("model"),
             bundle=data.get("bundle", "default"),
+            email=data.get("email"),
         ),
         media_type="text/plain",
     )
