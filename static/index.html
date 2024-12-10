@@ -1,18 +1,20 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <style>
-      html * { font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif }
-      fizz-buzz { display: block }
-    </style>
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="components" href="/components/components.js"/>
     <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
   </head>
-  <h1>hello world</h1>
   <main-app>
   </main-app>
   <script type="module">
     import {init} from '/domo.js';
-    init(document.querySelector('main-app'));
+    window.config = {};
+    fetch('/api/config').then(
+      (data) => data.json()
+    ).then((json) => {
+      window.config = json;
+      init(document.querySelector('main-app'));
+    });
   </script>
 </html>

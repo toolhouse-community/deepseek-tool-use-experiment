@@ -6,7 +6,6 @@ export class ResizableTextarea extends Domo {
   }
   
   autoResizeTextbox(e) {
-    console.log(this.textbox.scrollHeight, this.textbox.offsetHeight)
     if (this.textbox.scrollHeight > this.textbox.offsetHeight) {
       this.textbox.style.height = this.textbox.scrollHeight + 'px';
     }

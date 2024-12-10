@@ -38,7 +38,7 @@ html * {
 
 body {
   background-color: #000;
-  color: #5f8b6b;  /* MS-DOS prompt style grey-green */
+  color: #aaa;
   padding: 1rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   width: 60%;
@@ -47,7 +47,7 @@ body {
 
 /* Text Styles */
 h1, h2, h3, h4, h5, h6 {
-  color: #5f8b6b;
+  color: #08f;
   text-shadow: 0 0 2px #000;
 }
 
@@ -61,29 +61,56 @@ a {
 }
 
 a:hover {
-  color: #7fa080;
+  color: #fff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form input, form textarea, form label, form button {
+  display: block;
+  margin: 0.5rem;
+  color: #ccc
+}
+
+form textarea {
+  height: 60px;
+  resize: none;
 }
 
 /* UI Element Styles */
 button, input[type="button"], input[type="submit"] {
-  background-color: #333;
-  color: #5f8b6b;
+  background-color: #1f96ff;
+  color: #fff;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
 }
 
-button:hover, input[type="button"]:hover, input[type="submit"]:hover {
-  background-color: #444;
+button:disabled {
+  opacity: 0.5;
 }
 
-input[type="text"], input[type="password"], textarea {
+button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+  background-color: #08f;
+}
+
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+textarea {
   background-color: #222;
-  color: #5f8b6b;
+  color: #aaa;
   border: none;
   padding: 0.5rem;
   border-radius: 5px;
+}
+
+input:focus, textarea:focus {
+  outline: 2px solid #08f;
 }
 
 /* Table Styles */
@@ -184,18 +211,40 @@ chat-history-container div.user {
   background: #08f;
 }
 
-chat-history-container div.assistant p {
-  color: #c8c8c8;
-}
-
-chat-history-container div.user p {
-  color: #eee;
-}
-
 chat-history-container div.assistant {
   background: #181818;
   margin-right: 40%;
 }
+
+chat-history-container div.assistant.success {
+  background: #3E8E41;
+}
+
+chat-history-container div.assistant.error {
+  background: hsl(0, 64%, 42%);
+}
+
+chat-history-container div.assistant h1, 
+chat-history-container div.assistant h2, 
+chat-history-container div.assistant h3, 
+chat-history-container div.assistant h4, 
+chat-history-container div.assistant h5, 
+chat-history-container div.assistant h6,
+chat-history-container div.assistant p {
+  color: #c8c8c8;
+}
+
+chat-history-container div.user h1, 
+chat-history-container div.user h2, 
+chat-history-container div.user h3, 
+chat-history-container div.user h4, 
+chat-history-container div.user h5, 
+chat-history-container div.user h6,
+chat-history-container div.user p {
+  color: #eee;
+}
+
+
 
 resizable-texarea {
   flex: 1;

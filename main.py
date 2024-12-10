@@ -1,12 +1,12 @@
 from starlette.applications import Starlette
-from starlette.responses import Response, JSONResponse
+from starlette.responses import FileResponse, JSONResponse
 from starlette.routing import Route
 from starlette.routing import Mount
 from starlette.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.types import ASGIApp, Receive, Scope, Send
-from api.chat.post import post_chat
+import api.chat
+import api.config
 import dotenv
 import os
 
@@ -26,6 +26,10 @@ async def homepage(request):
     return JSONResponse({"hello": "world"})
 
 
+async def serve_index(request):
+    return FileResponse("static/index.html")
+
+
 # Determine middleware and debug based on environment
 middleware = (
     [Middleware(DisableCacheMiddleware)]
@@ -39,7 +43,9 @@ app = Starlette(
     middleware=middleware,
     routes=[
         Route("/api", homepage),
-        Route("/api/chat", post_chat, methods=["POST"]),
+        Route("/api/chat", api.chat.post, methods=["POST"]),
+        Route("/api/config", api.config.get, methods=["GET"]),
+        Route("/app/{path:path}", serve_index),
         Mount("/", StaticFiles(directory="static", html=True), name="static"),
     ],
 )

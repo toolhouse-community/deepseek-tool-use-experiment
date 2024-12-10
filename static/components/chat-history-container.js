@@ -9,6 +9,20 @@ export class ChatHistoryContainer extends Domo {
       emoji: true,
       underline: true,
       strikethrough: true,
+      backslashEscapesHTMLTags: true,
+      extensions: [{
+        type: 'lang',
+        filter: (text, converter, options) => {
+          const tagsToReplace = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;'
+          };
+        
+          const replaceTag = (tag) => tagsToReplace[tag] || tag;
+          return text.replace(/[&<>]/g, replaceTag);
+        }
+      }]
     });
 
     this.md.setFlavor('github');
@@ -24,12 +38,23 @@ export class ChatHistoryContainer extends Domo {
     }
   }
 
+  cssClassNames(role, text = '') {
+    const classes = [role];
+    if (text.includes('<valid/>')) {
+      classes.push('success');
+    } else if (text.includes('<errors>')) {
+      classes.push('error');
+    }
+
+    return classes.join(' ')
+  }
+
   makeHtmlOpenAI({ role, content, tool_calls}) {
     if (content) {
-      return html`<div class="${role}">${this.md.makeHtml(content)}</div>`;
+      return html`<div class="${this.cssClassNames(role, content)}">${this.md.makeHtml(content)}</div>`;
     } else if (Array.isArray(tool_calls)) {
       const bubbles = tool_calls.map((c) =>
-        `<div class="${role}">
+        `<div class="${this.cssClassNames(role)}">
           <h4>Using tools</h4>
           <p>${c.function.name}(${c.function.arguments != '{}' ? c.function.arguments : ''})</p>
         </div>`
@@ -46,12 +71,12 @@ export class ChatHistoryContainer extends Domo {
         switch(c.type) {
           case 'text':
             if (c.text) {
-              bubbles += `<div class="${role}">${this.md.makeHtml(c.text)}</div>`;
+              bubbles += `<div class="${this.cssClassNames(role, c.text)}">${this.md.makeHtml(c.text)}</div>`;
             }
             break;
           case 'tool_use':
             bubbles += `
-              <div class="${role}">
+              <div class="${this.cssClassNames(role)}">
                 <h4>Using tools</h4>
                 <p>${c.name}(${JSON.stringify(c.input) !== '{}' ? JSON.stringify(c.input) : ''})</p>
               </div>`;
@@ -60,7 +85,9 @@ export class ChatHistoryContainer extends Domo {
       });
       return html`${bubbles}`;
     } else {
-      return html`<div class="${role}">${this.md.makeHtml(content)}</div>`;
+      console.log(role, content.text ?? content)
+      const text = content.text ?? content;
+      return html`<div class="${this.cssClassNames(role, text)}">${this.md.makeHtml(text)}</div>`;
     }
   }
 
