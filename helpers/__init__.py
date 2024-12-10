@@ -1,4 +1,5 @@
 from starlette.requests import Request
+from urllib.parse import urlparse
 import tomllib
 
 
@@ -19,4 +20,6 @@ def read_config(file: str) -> dict | None:
 
 def get_app_name(request: Request):
     referer = request.headers.get("referer")
-    return referer.split("/")[-1]
+    parsed_url = urlparse(referer)
+    path_segments = parsed_url.path.strip("/").split("/")
+    return path_segments[-1] if path_segments else None

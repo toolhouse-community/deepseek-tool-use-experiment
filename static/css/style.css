@@ -303,7 +303,7 @@ action-box button b {
   color: #fff;
 }
 
-svg.icon {
+generic-icon svg {
   color: #08f;
   width: 2em;
 }

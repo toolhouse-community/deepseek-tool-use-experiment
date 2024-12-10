@@ -12,6 +12,7 @@ async def get(request: Request):
         return JSONResponse({}, status_code=HTTP_404_NOT_FOUND)
 
     if config := read_config(f"./prompts/{name}.toml"):
+        config["app_name"] = name
         return JSONResponse(config)
     else:
         return JSONResponse({}, status_code=HTTP_404_NOT_FOUND)

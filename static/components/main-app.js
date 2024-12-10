@@ -7,17 +7,18 @@ export class MainApp extends Domo {
     this.firstRender = true;
   }
 
-  getInitialState() {
+  getInitialState() {    
     this.setupStream()
-
-    return { 
+    const state = { 
       messages: [], 
       thinking: false,
       streamingResponse: '',
       formIsHidden: false,
-      email: localStorage.getItem('email') ?? '',
-      configured: !!localStorage.getItem('configured') || false,
+      email: localStorage.getItem(config.app_name + '-email') ?? '',
+      configured: !!localStorage.getItem(config.app_name + '-configured') || false,
     };
+
+    return state
   }
 
   setupStream() {
@@ -32,9 +33,9 @@ export class MainApp extends Domo {
       this.setState({streamingResponse : '', messages: messages});
       if (lastMessage.includes('<valid/>')) {
         this.handleMessageSubmission(config.prompts.save_settings.text);
-        localStorage.setItem('email', this.state.email);
+        localStorage.setItem(config.app_name + '-email', this.state.email);
       } else if (lastMessage.includes('<stored/>')) {
-        localStorage.setItem('configured', 'true');
+        localStorage.setItem(config.app_name + '-configured', 'true');
         this.setState({ configred: true });
       }
     });
@@ -56,6 +57,10 @@ export class MainApp extends Domo {
     const postData = {
       messages: this.state.messages,
     };
+
+    if (localStorage.getItem(config.app_name + '-email')) {
+      postData.email = localStorage.getItem(config.app_name + '-email');
+    }
     
     this.processor.processStream(postData);
   }
@@ -80,7 +85,7 @@ export class MainApp extends Domo {
   render() {
     return html`
       <div style="display: flex">
-        <utensils-crossed-icon style="margin-right: 1em " />
+        <generic-icon icon="${config.app_name}" style="margin-right: 1em " />
         <h1 style="flex:1">${config.main.title}</h1>
       </div>
       
