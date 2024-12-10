@@ -85,7 +85,6 @@ export class ChatHistoryContainer extends Domo {
       });
       return html`${bubbles}`;
     } else {
-      console.log(role, content.text ?? content)
       const text = content.text ?? content;
       return html`<div class="${this.cssClassNames(role, text)}">${this.md.makeHtml(text)}</div>`;
     }

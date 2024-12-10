@@ -26,9 +26,9 @@ export class MainApp extends Domo {
     
     this.processor.addEventListener('end', (event) => {
       const messages = JSON.parse(event.detail);
-      const lastMessages = JSON.stringify(messages.at(-1));
+      const lastMessage = JSON.stringify(messages.at(-1));
       this.setState({streamingResponse : '', messages: messages});
-      if (lastMessages.includes('<valid/>')) {
+      if (lastMessage.includes('<valid/>')) {
         this.handleMessageSubmission(config.prompts.save_settings.text);
       }
     });
