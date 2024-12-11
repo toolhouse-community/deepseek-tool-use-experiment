@@ -1,4 +1,4 @@
-import Domo, {html} from '/static/domo.js';
+import Domo, {html} from '/domo.js';
 
 export class UtensilsCrossedIcon extends Domo {
   render() {

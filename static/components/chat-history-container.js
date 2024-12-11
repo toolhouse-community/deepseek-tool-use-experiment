@@ -1,4 +1,4 @@
-import Domo, {html} from '/static/domo.js';
+import Domo, {html} from '/domo.js';
 
 export class ChatHistoryContainer extends Domo {
   constructor(component) {
