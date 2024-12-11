@@ -1,4 +1,4 @@
-import Domo, {html} from '/domo.js';
+import Domo, {html} from '/static/domo.js';
 
 export class ResizableTextarea extends Domo {
   constructor(component) {

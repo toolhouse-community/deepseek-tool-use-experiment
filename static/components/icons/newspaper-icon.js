@@ -1,4 +1,4 @@
-import Domo, {html} from '/domo.js';
+import Domo, {html} from '/static/domo.js';
 
 export class NewspaperIcon extends Domo {
   render() {
