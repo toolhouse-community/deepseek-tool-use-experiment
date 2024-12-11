@@ -8,6 +8,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 import api.chat
 import api.config
 import api.cron
+import api.gifts
 import dotenv
 import os
 import pathlib
@@ -29,13 +30,16 @@ async def serve_index(request):
 
 
 async def serve_static(request):
-    path = request.path_params.get("path")
+    # Extract the requested path
+    path = request.path_params.get("path", "")
     file_path = pathlib.Path("static") / path
 
-    if file_path.exists():
+    # Check if the file exists
+    if file_path.is_file():
         return FileResponse(file_path)
-    else:
-        return FileResponse("static/index.html")
+
+    # Default to serving the index.html
+    return FileResponse("static/index.html")
 
 
 # Determine middleware and debug based on environment
@@ -53,6 +57,7 @@ app = Starlette(
         Route("/api/chat", api.chat.post, methods=["POST"]),
         Route("/api/config", api.config.get, methods=["GET"]),
         Route("/api/cron", api.cron.post, methods=["POST"]),
+        Route("/api/gifts", api.gifts.get, methods=["GET"]),
         Route("/app/{path:path}", serve_static),
         Mount(
             "/",

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AdventAI</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="components" href="/components/components.js">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="christmas-background"></div>
@@ -30,11 +33,19 @@
             </form>
         </div>
 
+        <gift-list />
+
         <p class="footer">
             Brought to you by <a href='https://toolhouse.ai' target='_blank'>Toolhouse</a>. 🛠️
         </p>
     </div>
 
     <script src="script.js"></script>
+    <script type="module">
+        import {init} from '/app/domo.js';
+        const request = await fetch('/api/gifts');
+        window.gifts = await request.json();
+        init(document.querySelector('gift-list'));
+    </script>
 </body>
 </html>

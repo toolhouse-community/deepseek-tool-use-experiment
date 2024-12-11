@@ -78,7 +78,5 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   }
 
-  // Initial UI update
-  updateCountdown();
   updateUI();
 });
