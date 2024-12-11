@@ -1,0 +1,40 @@
+[main]
+model = ""
+title = ""
+description = ""
+app_bundle = "default"
+recurring_action_bundle = "default"
+all_set_label = ""
+
+[system_prompt]
+text = ""
+
+[[suggested_actions]]
+title = ""
+label = ""
+action = ""
+
+[[suggested_actions]]
+title = ""
+label = ""
+action = ""
+
+[settings]
+email_label = ""
+email_placeholder = ""
+preferences_label = ""
+preferences_placeholder = ""
+button_label = ""
+button_loading_label = ""
+
+[prompts.check_settings]
+text = ""
+
+[prompts.save_settings]
+text = ""
+
+[prompts.main]
+text = ""
+
+[prompts.recurring_action]
+text = ""
