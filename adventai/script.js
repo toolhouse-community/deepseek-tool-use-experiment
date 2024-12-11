@@ -66,27 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   });
 
-  // Countdown logic
-  function updateCountdown() {
-      const startDate = new Date('2024-12-13 00:00:00').getTime();
-      const now = new Date().getTime();
-      const daysToGo = Math.floor((startDate - now) / 1000 / 24 / 60 / 60);
-      const isSubscribed = localStorage.getItem('subscribed') === 'true';
-
-      let countdownMessage = '';
-      if (daysToGo > 0) {
-          countdownMessage += `${daysToGo} ${daysToGo === 1 ? 'day' : 'days'} to go!`;
-      } else {
-          countdownMessage += 'Unwrap today\'s app!';
-      }
-
-      if (!isSubscribed) {
-          countdownMessage += ' Sign up to get notified when it\'s time to unwrap your apps.';
-      }
-
-      countdownText.textContent = countdownMessage;
-  }
-
   function updateUI() {
       const isSubscribed = localStorage.getItem('subscribed') === 'true';
       const emailSection = document.getElementById('email-section');
@@ -102,5 +81,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial UI update
   updateCountdown();
   updateUI();
-  setInterval(updateCountdown, 86400000); // Update daily
 });

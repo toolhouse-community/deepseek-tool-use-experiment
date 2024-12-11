@@ -44,9 +44,14 @@ app = Starlette(
         Route("/api/cron", api.cron.post, methods=["POST"]),
         Route("/app/{path:path}", serve_index),
         Mount(
+            "/app",
+            StaticFiles(directory="static", html=True),
+            name="static",
+        ),
+        Mount(
             "/",
-            StaticFiles(directory="static/adventai", html=True),
-            name="static/adventai",
+            StaticFiles(directory="adventai", html=True),
+            name="adventai",
         ),
     ],
 )

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="components" href="/components/components.js"/>
+    <link rel="stylesheet" href="/app/css/style.css" />
+    <link rel="components" href="/app/components/components.js"/>
     <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
   </head>
   <main-app>
   </main-app>
   <script type="module">
-    import {init} from '/domo.js';
+    import {init} from '/app/domo.js';
     window.config = {};
     fetch('/api/config').then(
       (data) => data.json()

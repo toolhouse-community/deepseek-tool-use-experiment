@@ -163,16 +163,16 @@ li:last-child {
 
 /* Code Block Styles */
 code {
-  background-color: #222;
-  color: #5f8b6b;
+  background-color: #22222288;
+  color: #08f;
   padding: 0.5rem;
   border-radius: 5px;
 }
 
 pre {
-  background-color: #222;
-  padding: 1rem;
-  border-radius: 10px;
+  background-color: #222888;
+  padding: 0.5rem;
+  border-radius: 5px;
   overflow-x: auto;
 }
 

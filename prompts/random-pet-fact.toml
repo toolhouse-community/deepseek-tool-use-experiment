@@ -1,5 +1,5 @@
 [main]
-model = "gpt-4o-mini"
+model = "claude-3-5-sonnet-latest"
 title = "Random pet facts"
 description = "Get a random pet fact about the pets you like the most!"
 app_bundle = "default"
