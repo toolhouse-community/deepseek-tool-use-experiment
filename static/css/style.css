@@ -1,6 +1,6 @@
 @font-face {
   font-family: cinetype;
-  src: url('/fonts/GT-Cinetype-Mono.woff') format('woff');
+  src: url('/app/fonts/GT-Cinetype-Mono.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
