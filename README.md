@@ -38,16 +38,16 @@ poetry install
 
 #### Run
 
-To run on 0.0.0.0:8000 over a secure connection (HTTPS)L
+To run on http://0.0.0.0:8000
 
 ```bash
-hypercorn main:app --bind 0.0.0.0:8000 --certfile cert.pem --keyfile key.pem
+hypercorn main:app --bind 0.0.0.0:8000
 ```
 
 You can use `watchexec` to monitor changes and reload changes automatically.
 
 ```bash
-watchexec -r -e py "hypercorn main:app --bind 0.0.0.0:8000 --certfile cert.pem --keyfile key.pem" 
+watchexec -r -e py "hypercorn main:app --bind 0.0.0.0:8000" 
 ```
 
 To reload changes you made to the frontend, simply refresh your browser.
