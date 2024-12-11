@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Rethink Sans", sans-serif;
+  height: 100%;
+  background-color: #065f46;
+  color: white;
+  overflow: hidden;
+}
+
+.christmas-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.landing-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.25rem;
+  max-width: 800px;
+  margin-bottom: 2rem;
+}
+
+#email-section {
+  width: 100%;
+  max-width: 400px;
+}
+
+#email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#email-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#submit-button {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#submit-button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
+.footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.footer a {
+  color: white;
+}
+
+.snowflake, .candycane {
+  position: absolute;
+  top: -20px;
+  font-size: 1.5rem;
+  animation: fall linear infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to {
+      transform: translateY(100vh) rotate(360deg);
+  }
+}

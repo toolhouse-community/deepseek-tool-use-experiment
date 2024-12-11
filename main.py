@@ -23,10 +23,6 @@ class DisableCacheMiddleware(BaseHTTPMiddleware):
         return response
 
 
-async def homepage(request):
-    return JSONResponse({"hello": "world"})
-
-
 async def serve_index(request):
     return FileResponse("static/index.html")
 
@@ -43,11 +39,14 @@ app = Starlette(
     debug=debug,
     middleware=middleware,
     routes=[
-        Route("/api", homepage),
         Route("/api/chat", api.chat.post, methods=["POST"]),
         Route("/api/config", api.config.get, methods=["GET"]),
         Route("/api/cron", api.cron.post, methods=["POST"]),
         Route("/app/{path:path}", serve_index),
-        Mount("/", StaticFiles(directory="static", html=True), name="static"),
+        Mount(
+            "/",
+            StaticFiles(directory="static/adventai", html=True),
+            name="static/adventai",
+        ),
     ],
 )
