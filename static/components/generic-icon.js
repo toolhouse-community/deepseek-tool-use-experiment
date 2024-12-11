@@ -1,4 +1,4 @@
-import Domo, {html} from '/domo.js';
+import Domo, {html} from '/app/domo.js';
 
 export class GenericIcon extends Domo {
   render() {
@@ -7,6 +7,8 @@ export class GenericIcon extends Domo {
         return html`<utensils-crossed-icon />`;
       case 'news-digest':
         return html`<newspaper-icon />`;
+      case 'real-estate-agent':
+        return html`<house-icon />`;
       case 'random-pet-fact':
         return html`<random-pet-icon />`;
       case 'x-digest':

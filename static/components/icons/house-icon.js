@@ -1,4 +1,4 @@
-import Domo, {html} from '/domo.js';
+import Domo, {html} from '/app/domo.js';
 
 export class HouseIcon extends Domo {
   render() {

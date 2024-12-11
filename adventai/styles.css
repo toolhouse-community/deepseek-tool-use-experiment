@@ -10,6 +10,10 @@ body, html {
   overflow: hidden;
 }
 
+input, button {
+  font-family: "Rethink Sans", sans-serif;
+}
+
 .christmas-background {
   position: absolute;
   top: 0;

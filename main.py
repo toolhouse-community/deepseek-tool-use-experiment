@@ -10,6 +10,7 @@ import api.config
 import api.cron
 import dotenv
 import os
+import pathlib
 
 dotenv.load_dotenv()
 
@@ -27,6 +28,16 @@ async def serve_index(request):
     return FileResponse("static/index.html")
 
 
+async def serve_static(request):
+    path = request.path_params.get("path")
+    file_path = pathlib.Path("static") / path
+
+    if file_path.exists():
+        return FileResponse(file_path)
+    else:
+        return FileResponse("static/index.html")
+
+
 # Determine middleware and debug based on environment
 middleware = (
     [Middleware(DisableCacheMiddleware)]
@@ -42,12 +53,7 @@ app = Starlette(
         Route("/api/chat", api.chat.post, methods=["POST"]),
         Route("/api/config", api.config.get, methods=["GET"]),
         Route("/api/cron", api.cron.post, methods=["POST"]),
-        Route("/app/{path:path}", serve_index),
-        Mount(
-            "/app",
-            StaticFiles(directory="static", html=True),
-            name="static",
-        ),
+        Route("/app/{path:path}", serve_static),
         Mount(
             "/",
             StaticFiles(directory="adventai", html=True),
