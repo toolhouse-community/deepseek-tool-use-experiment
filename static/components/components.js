@@ -6,7 +6,9 @@ import { PreferencesForm } from "./preferences-form.js";
 import { ResizableTextarea } from "./resizable-textarea.js";
 import { SuccessMessage } from "./success-message.js";
 
+import { NewspaperIcon } from "./icons/newspaper-icon.js";
 import { TwitterIcon } from "./icons/twitter-icon.js";
+import { RandomPetIcon } from "./icons/random-pet-icon.js";
 import { UtensilsCrossedIcon } from "./icons/utensils-crossed-icon.js";
 
 export { 
@@ -14,7 +16,9 @@ export {
   ChatHistoryContainer,
   GenericIcon,
   MainApp,
+  NewspaperIcon,
   PreferencesForm,
+  RandomPetIcon,
   ResizableTextarea,
   SuccessMessage,
   TwitterIcon,

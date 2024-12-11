@@ -25,7 +25,6 @@
   }
 }
 
-
 @keyframes blink {
   0% {
     opacity: 1; /* Starting with a faint opacity to simulate old monitor effect */
