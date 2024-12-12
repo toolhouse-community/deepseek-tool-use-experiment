@@ -7,7 +7,7 @@
   </head>
   <main-app>
   </main-app>
-  <main id="error">
+  <main id="error" class="hidden">
     <pre>
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⣀⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡴⣾⢻⣻⠭⠓⠻⠀⠀⠀⠀⠀⠈⠉⠉⠛⠛⠒⠦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -84,9 +84,7 @@
 
       let timer = 1;
       for (const element of error.children) {
-        console.log(element)
         requestAnimationFrameTimeout(() => {
-          console.log(element)
           element.classList.add('fade-in', 'slow');
         }, timer);
         timer += 1400;

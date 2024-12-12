@@ -340,3 +340,8 @@ main#error > * {
   text-align: center;
   opacity: 0;
 }
+
+main#error pre {
+  background-color: #000;
+  font-family: monospace;
+}
