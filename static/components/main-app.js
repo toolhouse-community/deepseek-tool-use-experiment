@@ -66,7 +66,6 @@ export class MainApp extends Domo {
   }
   
   getMessages() {return this.state.messages}
-  // getMessages() {return [{"role": "user", "content": "Validate the following details.\n- Check that the following is a valid email: daniele@test.com\n- Check that the following are valid meal preferences: vegetarian\n  \nIf all look good to you, respond with <valid/>. If something does not look right, let me know what the errors are. Respond with errors in <errors></errors> tags. Do not store these details until I explicitly tell you do to so."}, {"role": "assistant", "content": [{"text": "Let me check these details:\n\n1. Email validation (daniele@test.com):\n   - Contains @ symbol\n   - Has valid format with username and domain\n   - Has proper domain structure (.com)\n   This is a properly formatted email address.\n\n2. Meal preference (vegetarian):\n   - \"Vegetarian\" is a standard, well-recognized dietary preference\n   - It clearly indicates a specific type of diet\n   This is a valid meal preference.\n\nSince both the email format and the meal preference are valid:\n\n<errors>", "type": "text"}]}];}
   getStreamingResponse() {return this.state.streamingResponse}
   thinking() {return this.state.thinking}
 
@@ -91,7 +90,7 @@ export class MainApp extends Domo {
       
       <p>${config.main.description}</p>
       <preferences-form 
-        data-hidden="${this.state.formIsHidden || this.state.configured}"
+        data-hidden="${this.state.formIsHidden || this.state.configured || this.state.messages.length > 0}"
         cb-submit=${this.submitPreferences}
       />
       ${this.state.configured && this.firstRender ? `<success-message />` : ''}

@@ -230,21 +230,24 @@ chat-history-container img {
   max-width: 100%;
 }
 
-chat-history-container div {
+chat-history-container > div {
   border-radius: 8px;
   margin: 0.5rem 0 1rem;
   padding: 0 1rem;
   color: #ccc;
+  max-width: 60%;
 }
 
 chat-history-container div.user {
-  margin-left: 40%;
+  margin-left: auto;
+  margin-right: 0;
   background: #08f;
 }
 
 chat-history-container div.assistant {
+  margin-left: 0;
+  margin-right: auto;
   background: #181818;
-  margin-right: 40%;
 }
 
 .success,
@@ -344,4 +347,22 @@ main#error > * {
 main#error pre {
   background-color: #000;
   font-family: monospace;
+}
+
+@media only screen and (max-width: 768px) {
+  html {
+    font-size: 0.8rem;
+  }
+
+  body {
+    width: auto;
+  }
+
+  chat-history-container > div {
+    max-width: 80%
+  }
+
+  main-app {
+    height: calc(100vh - 38px);
+  }
 }

@@ -104,7 +104,9 @@ export class StreamProcessor extends EventTarget {
         }
       });
 
-      window.onbeforeunload(() => stream.cancel());
+      if (window.onbeforeunload) {
+        window.onbeforeunload(() => stream.cancel());
+      }
       
       return stream;
     } catch (error) {

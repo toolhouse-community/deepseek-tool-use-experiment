@@ -204,7 +204,7 @@ export default class Domo extends HTMLElement {
   constructor() {
     super();
     this.state = this.getInitialState();
-    this._renderPending = true;  // Add this flag
+    this._renderPending = true;
 
     new MutationObserver(mutations => {
       mutations.forEach(mutation => {
