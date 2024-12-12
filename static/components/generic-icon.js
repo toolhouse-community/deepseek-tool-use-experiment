@@ -3,6 +3,8 @@ import Domo, {html} from '/app/domo.js';
 export class GenericIcon extends Domo {
   render() {
     switch (this.getAttribute("icon")) {
+      case 'career-coach':
+        return html`<biceps-flexed-icon />`
       case 'mealplanner':
         return html`<utensils-crossed-icon />`;
       case 'news-digest':

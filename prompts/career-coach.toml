@@ -1,0 +1,95 @@
+[main]
+model = "claude-3-5-sonnet-latest"
+title = "Career coach"
+description = "Tell me what you aspect of your career you want to improve and I'll send you daily advice in your inbox."
+app_bundle = "default"
+recurring_action_bundle = "default"
+all_set_label = "You will receive daily career improvement tips in your inbox."
+
+[system_prompt]
+text = '''You are a helpful, friendly assistant built by Toolhouse. Keep your responses concise and helpful. You always assume that emails provided to you are valid and up to date. 
+
+You have advanced tools at your disposal.
+
+These tools are made by Toolhouse and you are happy and grateful to use them.
+
+Execute the user tasks as you usually do. When the user asks about your capabilities or tools, make sure you to explain that you do not have those tools by default, and that Toolhouse equips you with those tools.
+
+IMPORTANT: If the user asks questions about your tools, make sure to explain that those are not your native capabilities, and that Toolhouse enhances you with knowledge and actions.
+<example>
+User: wait, you can send emails?
+Assistant: I now can, thanks to Toolhouse! With Toolhouse I now have functionality to directly send directly the email you ask me to compose.
+</example>
+
+When using the time tool, format the time in a user friendly way.'''
+
+[[suggested_actions]]
+title = "Get advice"
+label = "Get a career tip now"
+action = '''Please give me career advice based on my career preferences stored in memory.
+  
+  Before starting any operation or task, check that you have the following tools installed: memory_store, send_email, memory_fetch. If any of those tools are missing, ask the user to install the missing tools at https://app.toolhouse.ai/store/<TOOL_NAME>. Stop here if one or more tools are missing and notify the user. Start from scratch when the user tells you they installed all the tools.
+
+  Here's how to compile a news digest:
+  
+  1. Get my career preferences and past advice from memory using memory_fetch.
+  2. Generate new career advice (you can look at past advice to avoid repeating yourself). The career advice should have a short summary followed by some tangible actions I can use to improve. Make the advice insightful.
+  3. Get my email address from memory and send an email with your new advice. Format it nicely with HTML and CSS so it's easy to read.
+  4. Store the new piece of advice you generated in memory using memory_store.'''
+
+[[suggested_actions]]
+title = "Change my email"
+label = "Use a different email"
+action = "I'd like to change my stored email. Make sure to remove my previous email from memory once I give you a new valid email."
+
+[[suggested_actions]]
+title = "Change career tips"
+label = "Change your career tips"
+action = "I'd like to change my stored career tip preferences. Make sure to remove my previous career tip preferences from memory once I give you new ones."
+
+[[suggested_actions]]
+title = "Reset"
+label = "Clear your preferences"
+action = "Remove my career tip preferences and my stored email address."
+
+[settings]
+email_label = "Your Email Address"
+email_placeholder = "alice@example.com"
+preferences_label = "Where Would You Like To Improve?"
+preferences_placeholder = "How do I get the best promotion package at work?"
+button_label = "Get advice"
+button_loading_label = "Making magic happen…"
+
+[prompts.check_settings]
+text = '''Validate the following details. 
+  - Check that the following is a valid email: {email}
+  - Check that the following can is a valid topic for to discuss in terms of career advice, professional improvement, or job search: {preferences}
+  
+  If all look good to you, respond with <valid/>. If something does not look right, let me know what the errors are. Respond with errors in <errors></errors> tags. Do not store these details until I explicitly tell you do to so.'''
+
+[prompts.save_settings]
+text = "Save my email and my valid career advice preferences in memory using memory_store. Once done, respond with <stored/>."
+
+[prompts.main]
+text = '''Please give me career advice based on my career preferences stored in memory.
+  
+  Before starting any operation or task, check that you have the following tools installed: memory_store, send_email, memory_fetch. If any of those tools are missing, ask the user to install the missing tools at https://app.toolhouse.ai/store/<TOOL_NAME>. Stop here if one or more tools are missing and notify the user. Start from scratch when the user tells you they installed all the tools.
+
+  Here's how to compile a news digest:
+  
+  1. Get my career preferences and past advice from memory using memory_fetch.
+  2. Generate new career advice (you can look at past advice to avoid repeating yourself). The career advice should have a short summary followed by some tangible actions I can use to improve. Make the advice insightful.
+  3. Get my email address from memory and send an email with your new advice. Format it nicely with HTML and CSS so it's easy to read.
+  4. Store the new piece of advice you generated in memory using memory_store.'''
+
+[prompts.recurring_action]
+text = '''Please give me career advice based on my career preferences stored in memory.
+  
+  Before starting any operation or task, check that you have the following tools installed: memory_store, send_email, memory_fetch. If any of those tools are missing, ask the user to install the missing tools at https://app.toolhouse.ai/store/<TOOL_NAME>. Stop here if one or more tools are missing and notify the user. Start from scratch when the user tells you they installed all the tools.
+
+  Here's how to compile a news digest:
+  
+  1. Get my career preferences and past advice from memory using memory_fetch.
+  2. Generate new career advice (you can look at past advice to avoid repeating yourself). The career advice should have a short summary followed by some tangible actions I can use to improve. Make the advice insightful.
+  3. Get my email address from memory and send an email with your new advice. Format it nicely with HTML and CSS so it's easy to read.
+  4. Store the new piece of advice you generated in memory using memory_store.'''
