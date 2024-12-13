@@ -9,6 +9,7 @@ export class MainApp extends Domo {
 
   getInitialState() {    
     this.setupStream()
+    document.title = config.main.title;
     const state = { 
       messages: [], 
       thinking: false,
