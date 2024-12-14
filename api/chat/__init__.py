@@ -1,7 +1,7 @@
 from starlette.requests import Request
 from starlette.responses import StreamingResponse
 from llms import generate_stream
-from helpers import get_app_name, read_config
+from helpers import format_user_id, get_app_name, read_config
 import dotenv
 import json
 
@@ -42,7 +42,7 @@ async def post(request: Request):
             messages=data.get("messages"),
             model=model,
             bundle=data.get("bundle", "default"),
-            email=data.get("email"),
+            email=format_user_id(name, data.get("email")),
         ),
         media_type="text/plain",
     )

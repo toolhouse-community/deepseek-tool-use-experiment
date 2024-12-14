@@ -7,7 +7,6 @@ from starlette.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
 import api.chat
 import api.config
-import api.cron
 import api.gifts
 import dotenv
 import os
@@ -56,7 +55,6 @@ app = Starlette(
     routes=[
         Route("/api/chat", api.chat.post, methods=["POST"]),
         Route("/api/config", api.config.get, methods=["GET"]),
-        Route("/api/cron", api.cron.post, methods=["POST"]),
         Route("/api/gifts", api.gifts.get, methods=["GET"]),
         Route("/app/{path:path}", serve_static),
         Mount(

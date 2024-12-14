@@ -33,8 +33,8 @@ export class MainApp extends Domo {
       const lastMessage = JSON.stringify(messages.at(-1));
       this.setState({streamingResponse : '', messages: messages});
       if (lastMessage.includes('<valid/>')) {
-        this.handleMessageSubmission(config.prompts.save_settings.text);
         localStorage.setItem(config.app_name + '-email', this.state.email);
+        this.handleMessageSubmission(config.prompts.save_settings.text);
       } else if (lastMessage.includes('<stored/>')) {
         localStorage.setItem(config.app_name + '-configured', 'true');
         this.setState({ configred: true });
@@ -62,7 +62,7 @@ export class MainApp extends Domo {
     if (localStorage.getItem(config.app_name + '-email')) {
       postData.email = localStorage.getItem(config.app_name + '-email');
     }
-    
+    console.log(postData)
     this.processor.processStream(postData);
   }
   
@@ -104,7 +104,7 @@ export class MainApp extends Domo {
       />
       <action-box 
         class="${this.firstRender ? 'fade-slide' : 'fade-out'}"
-        data-hidden="${this.state.configured === false || this.firstRender === false}"
+        data-hidden="${this.state.configured === false || this.firstRender}"
         cb-action-handler=${this.handleMessageSubmission}
       />
       <resizable-textarea 
