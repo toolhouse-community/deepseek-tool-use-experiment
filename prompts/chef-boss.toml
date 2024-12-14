@@ -2,8 +2,8 @@
 model = "claude-3-5-sonnet-latest"
 title = "Chef Boss"
 description = "Chef Boss is the ultimate comfort food (biased on Italian cuisine) chef inspirer"
-app_bundle = "chef-boss"
-recurring_action_bundle = "chef-boss"
+app_bundle = "default"
+recurring_action_bundle = "default"
 all_set_label = "You will receive daily comfort food receipes in your inbox."
 
 [system_prompt]
