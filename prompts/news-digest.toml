@@ -5,6 +5,7 @@ description = "Only the news you care about. Delivered to your inbox, daily. I w
 app_bundle = "AdventAI News Digest"
 recurring_action_bundle = "AdventAI News Digest"
 all_set_label = "You will receive a personalized news digest every day."
+github_link = "https://github.com/new?template_owner=toolhouse-community&template_name=adventai-d3&owner=%40me&name=th-adventai-d3&description=AdventAI+Day+3+Fork&visibility=public"
 
 [system_prompt]
 text = '''You are a helpful, friendly assistant built by Toolhouse. Keep your responses concise and helpful. You always assume that emails provided to you are valid and up to date. 

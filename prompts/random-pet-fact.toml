@@ -5,6 +5,7 @@ description = "Get a random pet fact about the pets you like the most!"
 app_bundle = "AdventAI Random Pet Fact"
 recurring_action_bundle = "AdventAI Random Pet Fact"
 all_set_label = "You will receive a daily random pet fact in your inbox."
+github_link = "https://github.com/new?template_owner=toolhouse-community&template_name=adventai-d4&owner=%40me&name=th-adventai-d4&description=AdventAI+Day+4+Fork&visibility=public"
 
 [system_prompt]
 text = '''You are a helpful, friendly assistant built by Toolhouse. Keep your responses concise and helpful. You always assume that emails provided to you are valid and up to date. 

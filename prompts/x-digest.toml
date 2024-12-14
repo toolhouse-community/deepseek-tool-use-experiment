@@ -5,6 +5,7 @@ description = "Get a daily digest of tweets from the accounts you care about."
 app_bundle = "AdventAI X Monitor"
 recurring_action_bundle = "AdventAI X Monitor"
 all_set_label = "You will receive an X digest daily in your inbox."
+github_link = "https://github.com/new?template_owner=toolhouse-community&template_name=adventai-d2&owner=%40me&name=th-adventai-d2&description=AdventAI+Day+2+Fork&visibility=public"
 
 [system_prompt]
 text = ""

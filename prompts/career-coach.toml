@@ -5,6 +5,7 @@ description = "Tell me what you aspect of your career you want to improve and I'
 app_bundle = "AdventAI Career Coach"
 recurring_action_bundle = "AdventAI Meal Planner"
 all_set_label = "You will receive daily career improvement tips in your inbox."
+github_link = "https://github.com/new?template_owner=toolhouse-community&template_name=adventai-d5&owner=%40me&name=th-adventai-d5&description=AdventAI+Day+5+Fork&visibility=public"
 
 [system_prompt]
 text = '''You are a helpful, friendly assistant built by Toolhouse. Keep your responses concise and helpful. You always assume that emails provided to you are valid and up to date. 

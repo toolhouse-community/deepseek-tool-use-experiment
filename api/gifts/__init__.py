@@ -10,6 +10,7 @@ apps = [
     "x-digest",
     "news-digest",
     "random-pet-fact",
+    "career-coach",
 ]
 
 

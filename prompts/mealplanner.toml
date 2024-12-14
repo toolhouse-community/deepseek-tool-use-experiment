@@ -2,6 +2,7 @@
 model = "claude-3-5-sonnet-latest"
 title = "My meal planner"
 description = "I will help you prepare a meal plan for the week based on your preferences."
+github_link = "https://github.com/new?template_owner=toolhouse-community&template_name=adventai-d1&owner=%40me&name=th-adventai-d1&description=AdventAI+Day+1+Fork&visibility=public"
 
 app_bundle = "AdventAI Meal Planner"
 recurring_action_bundle = "AdventAI Meal Planner"
