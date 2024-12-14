@@ -18,12 +18,11 @@ async def get(request: Request):
         current_date = datetime.now().date()
         start_date = datetime(2024, 12, 14).date()
         days_difference = (current_date - start_date).days
+
         if days_difference < 0:
             return JSONResponse([])
 
         num_elements = min(days_difference + 1, len(apps))
-        num_elements = max(num_elements, 12)
-
         current_apps = apps[:num_elements]
         out = []
         for app in current_apps:
