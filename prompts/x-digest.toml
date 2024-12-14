@@ -2,8 +2,8 @@
 model = "gpt-4o-mini"
 title = "The X Monitor"
 description = "Get a daily digest of tweets from the accounts you care about."
-app_bundle = "default"
-recurring_action_bundle = "default"
+app_bundle = "AdventAI X Monitor"
+recurring_action_bundle = "AdventAI X Monitor"
 all_set_label = "You will receive an X digest daily in your inbox."
 
 [system_prompt]
