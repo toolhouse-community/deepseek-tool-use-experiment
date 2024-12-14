@@ -2,8 +2,8 @@
 model = "claude-3-5-sonnet-latest"
 title = "Career coach"
 description = "Tell me what you aspect of your career you want to improve and I'll send you daily advice in your inbox."
-app_bundle = "default"
-recurring_action_bundle = "default"
+app_bundle = "AdventAI Career Coach"
+recurring_action_bundle = "AdventAI Meal Planner"
 all_set_label = "You will receive daily career improvement tips in your inbox."
 
 [system_prompt]

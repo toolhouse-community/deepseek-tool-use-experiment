@@ -2,8 +2,8 @@
 model = "claude-3-5-sonnet-latest"
 title = "Random pet facts"
 description = "Get a random pet fact about the pets you like the most!"
-app_bundle = "default"
-recurring_action_bundle = "default"
+app_bundle = "AdventAI Random Pet Fact"
+recurring_action_bundle = "AdventAI Random Pet Fact"
 all_set_label = "You will receive a daily random pet fact in your inbox."
 
 [system_prompt]

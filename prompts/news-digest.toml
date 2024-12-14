@@ -2,8 +2,8 @@
 model = "claude-3-5-sonnet-latest"
 title = "The Tool York Times Newsletter"
 description = "Only the news you care about. Delivered to your inbox, daily. I will compile a news digest based on the topics you like, and I will deliver them through email every day."
-app_bundle = "default"
-recurring_action_bundle = "default"
+app_bundle = "AdventAI News Digest"
+recurring_action_bundle = "AdventAI News Digest"
 all_set_label = "You will receive a personalized news digest every day."
 
 [system_prompt]

@@ -3,8 +3,8 @@ model = "claude-3-5-sonnet-latest"
 title = "My meal planner"
 description = "I will help you prepare a meal plan for the week based on your preferences."
 
-app_bundle = "default"
-recurring_action_bundle = "default"
+app_bundle = "AdventAI Meal Planner"
+recurring_action_bundle = "AdventAI Meal Planner"
 
 all_set_label = "You will receive a new set of recipes daily in your inbox."
 
