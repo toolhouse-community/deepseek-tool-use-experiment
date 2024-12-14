@@ -42,11 +42,12 @@ async def serve_static(request):
 
 
 # Determine middleware and debug based on environment
-middleware = (
-    [Middleware(DisableCacheMiddleware)]
-    if os.environ.get("ENVIRONMENT") == "development"
-    else []
-)
+# middleware = (
+#     [Middleware(DisableCacheMiddleware)]
+#     if os.environ.get("ENVIRONMENT") == "development"
+#     else []
+# )
+middleware = [Middleware(DisableCacheMiddleware)]
 debug = os.environ.get("ENVIRONMENT") == "development"
 
 app = Starlette(
