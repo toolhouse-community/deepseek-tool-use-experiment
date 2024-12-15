@@ -8,6 +8,7 @@ services:
     buildCommand: poetry install
     startCommand: hypercorn main:app --bind 0.0.0.0:$PORT
   - type: cron
+    runtime: python
     name: daily_run
     schedule: "0 14 * * *"
     buildCommand: "true"
