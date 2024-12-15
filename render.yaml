@@ -4,7 +4,7 @@ services:
     name: simplechat
     runtime: python
     plan: starter
-    autoDeploy: false
+    autoDeploy: true
     buildCommand: poetry install
     startCommand: hypercorn main:app --bind 0.0.0.0:10000
   - type: cron
@@ -12,4 +12,5 @@ services:
     name: daily_run
     schedule: "0 14 * * *"
     buildCommand: "true"
+    autoDeploy: true
     startCommand: "python run_cron.py"
