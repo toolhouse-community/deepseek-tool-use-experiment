@@ -1,10 +1,12 @@
 from starlette.applications import Starlette
-from starlette.responses import FileResponse, JSONResponse
+from starlette.requests import Request
+from starlette.responses import FileResponse, HTMLResponse
 from starlette.routing import Route
 from starlette.routing import Mount
 from starlette.staticfiles import StaticFiles
 from starlette.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
+from helpers import read_config
 import api.chat
 import api.config
 import api.gifts
@@ -28,26 +30,46 @@ async def serve_index(request):
     return FileResponse("static/index.html")
 
 
-async def serve_static(request):
+def get_app_name(request: Request):
+    path_segments = request.url.path.strip("/").split("/")
+    return path_segments[-1] if path_segments else None
+
+
+async def serve_static(request: Request):
     # Extract the requested path
     path = request.path_params.get("path", "")
+    request
     file_path = pathlib.Path("static") / path
 
     # Check if the file exists
     if file_path.is_file():
         return FileResponse(file_path)
 
+    appname = get_app_name(request)
+    if read_config(f"./prompts/{appname}.toml"):
+        with open("static/index.html", "r") as file:
+            html_content = file.read()
+            page = html_content.replace(
+                '<meta property="og:url" content="https://adventai.dev/app/">',
+                f'<meta property="og:url" content="https://adventai.dev/app/{appname}">',
+            )
+            page = page.replace(
+                '<meta property="og:image" content="https://adventai.dev/og/adventai.png">',
+                f'<meta property="og:image" content="https://adventai.dev/og/{appname}.png">',
+            )
+            return HTMLResponse(page)
+
     # Default to serving the index.html
-    return FileResponse("static/index.html")
+    return FileResponse("static/index.html", status_code=404)
 
 
 # Determine middleware and debug based on environment
-# middleware = (
-#     [Middleware(DisableCacheMiddleware)]
-#     if os.environ.get("ENVIRONMENT") == "development"
-#     else []
-# )
-middleware = [Middleware(DisableCacheMiddleware)]
+middleware = (
+    [Middleware(DisableCacheMiddleware)]
+    if os.environ.get("ENVIRONMENT") == "development"
+    else []
+)
+
 debug = os.environ.get("ENVIRONMENT") == "development"
 
 app = Starlette(
