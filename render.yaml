@@ -3,7 +3,7 @@ services:
   - type: web
     name: simplechat
     runtime: python
-    plan: free
+    plan: starter
     autoDeploy: false
     buildCommand: poetry install
     startCommand: hypercorn main:app --bind 0.0.0.0:$PORT
