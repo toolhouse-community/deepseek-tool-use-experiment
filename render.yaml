@@ -6,7 +6,7 @@ services:
     plan: starter
     autoDeploy: false
     buildCommand: poetry install
-    startCommand: hypercorn main:app --bind 0.0.0.0:$PORT
+    startCommand: hypercorn main:app --bind 0.0.0.0:10000
   - type: cron
     runtime: python
     name: daily_run
