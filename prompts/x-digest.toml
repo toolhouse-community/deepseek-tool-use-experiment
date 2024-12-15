@@ -42,10 +42,12 @@ button_loading_label = "Creating your X digest…"
 text = '''Validate the following details. 
 
 - Check that the following is a valid email: {email} 
-- Check that the following look like X accounts: {preferences} If all look good to you, respond with <valid/>. If something does not look right, let me know what the errors are. Respond with errors in <errors></errors> tags. Do not store these details until I explicitly tell you do to so.'''
+- Check that the following look like X accounts: {preferences} 
+
+Do not use tools to validate. Just check if the format looks right to you. If all look good to you, respond with <valid/>. If something does not look right, let me know what the errors are. Respond with errors in <errors></errors> tags. Do not store these details until I explicitly tell you do to so.'''
 
 [prompts.save_settings]
-text = "Save my email and my X account preferences in memory using memory_store.'Save my email and my valid meal preferences in memory using memory_store. Once done, respond with <stored/>'"
+text = "Save my email and my X account preferences in memory using memory_store. Once done, respond with <stored/>'"
 
 [prompts.main]
 text = """Compile a digest of tweets regarding the accounts I have stored in memory. 
