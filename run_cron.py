@@ -36,7 +36,10 @@ async def main():
 
             configurations[appname] = config
 
-        print(f"Found user for {config.get("main").get("title")}: {user.split("-")[1]}")
+        app_title = config.get("main").get("title")
+        user = user.split("-")[1]
+
+        print(f"Found user for {app_title}: {user}")
         # Run prompt for that user
         async for chunk in generate_stream(
             messages=[
