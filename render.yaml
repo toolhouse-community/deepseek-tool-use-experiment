@@ -11,6 +11,9 @@ services:
     runtime: python
     name: daily_run
     schedule: "0 14 * * *"
-    buildCommand: "poetry env use 3.12 && poetry install"
+    buildCommand: poetry install
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
     autoDeploy: true
     startCommand: "python run_cron.py"
