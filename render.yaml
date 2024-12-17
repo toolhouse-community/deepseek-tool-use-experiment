@@ -14,6 +14,6 @@ services:
     buildCommand: poetry install
     envVars:
       - key: PYTHON_VERSION
-        value: 3.12
+        value: 3.12.7
     autoDeploy: true
     startCommand: "python run_cron.py"
