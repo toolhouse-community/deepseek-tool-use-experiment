@@ -17,6 +17,8 @@ export class GenericIcon extends Domo {
         return html`<twitter-icon />`;
       case "chef-boss":
         return html`<chef-icon />`;
+      case "job-digest":
+        return html`<newspaper-icon />`;
     }
   }
 }
