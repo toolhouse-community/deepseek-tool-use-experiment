@@ -11,6 +11,8 @@ apps = [
     "news-digest",
     "random-pet-fact",
     "career-coach",
+    "job-digest",
+    "daily-facts"
 ]
 
 
