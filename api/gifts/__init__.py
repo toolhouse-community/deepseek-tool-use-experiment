@@ -12,7 +12,12 @@ apps = [
     "random-pet-fact",
     "career-coach",
     "job-digest",
-    "daily-facts"
+    "daily-facts",
+    "chef-boss",
+    "deal-finder",
+    "stonks-simulator",
+    "wwwed",
+    "real-estate-bot",
 ]
 
 
