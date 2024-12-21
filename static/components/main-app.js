@@ -127,8 +127,7 @@ export class MainApp extends Domo {
         cb-get-stream=${this.getStreamingResponse}
       />
       <action-box
-        class="${this.firstRender ? "fade-slide" : "fade-out"}"
-        data-hidden="${this.state.configured === false || this.firstRender}"
+        data-hidden="${this.state.configured === false}"
         cb-action-handler=${this.handleMessageSubmission}
       />
       <resizable-textarea cb-enter-handler=${this.handleMessageSubmission} />

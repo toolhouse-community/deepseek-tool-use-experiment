@@ -1,4 +1,4 @@
-import Domo, {html} from '/app/domo.js';
+import Domo, { html } from "/app/domo.js";
 
 export class ActionBox extends Domo {
   handleClick(e) {
@@ -9,13 +9,17 @@ export class ActionBox extends Domo {
   }
 
   render() {
-    if (this.dataset.hidden === 'true') {
+    if (this.dataset.hidden === "true") {
       return null;
     }
-    return config.suggested_actions.map(({ title, label }, key) => html`
-      <button data-key="${key}" on-click="handleClick">
+    return config.suggested_actions.map(
+      ({ title, label }, key) => html` <button
+        data-key="${key}"
+        on-click="handleClick"
+      >
         <b>${title}</b>
         ${label}
-      </button>`)
+      </button>`
+    );
   }
 }
