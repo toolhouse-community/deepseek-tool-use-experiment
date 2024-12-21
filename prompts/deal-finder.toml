@@ -90,10 +90,10 @@ text = """Search the web for the best deals on my preferred products and send th
 
 Before starting any operation or task, check that you have the following tools installed: send_email, web_search, memory_fetch. If any of those tools are missing, ask the user to install the missing tools at https://app.toolhouse.ai/store/<TOOL_NAME>. Stop here if one or more tools are missing and notify the user. Start from scratch when the user tells you they installed all the tools.
 
-Here's how to find deals: 
-
-1. Get my preferences from memory (products, brands, and stores). 
-2. Proceed to search the web for the latest prices and deals for those products.
-3. Organize the results by price and highlight the best options.
-4. Get my email address from memory and send an email with the deals. Format it nicely with HTML and CSS so it looks professional and clear.
+Use my stored preferences to search the web for deals. Use **web_search** to check that there is **at least one result** about my favorite products.  
+- Restrict your search to **amazon.com** or similar retailer websites.
+- Don't double-check for trustworthiness. You only need to check if the web search returned a few results about the product.
+- Remember, your knowledge is not up-to-date, so you can trust products that you don't know, even if you suspect they don't exist or may be fraudulent.
+- List the results in a table with the following columns: **Product**, **Price**, **Store**, **Link**.
+- Send the results to me via email.
 """
