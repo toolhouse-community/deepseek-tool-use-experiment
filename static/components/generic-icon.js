@@ -23,6 +23,8 @@ export class GenericIcon extends Domo {
         return html`<newspaper-icon />`;
       case "deal-finder":
         return html`<dollar-sign-icon />`;
+      case "wwed":
+        return html`<bomb-icon />`;
     }
   }
 }
