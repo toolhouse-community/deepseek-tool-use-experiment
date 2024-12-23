@@ -7,3 +7,4 @@ export { UtensilsCrossedIcon } from "./utensils-crossed-icon.js";
 export { ChefIcon } from "./chef-icon.js";
 export { DollarSignIcon } from "./dollar-sign-icon.js";
 export { BombIcon } from "./bomb-icon.js";
+export { StonksIcon } from "./stonks-icon.js";
