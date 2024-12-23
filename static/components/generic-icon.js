@@ -25,6 +25,8 @@ export class GenericIcon extends Domo {
         return html`<dollar-sign-icon />`;
       case "wwed":
         return html`<bomb-icon />`;
+      case "stonks-simulator":
+        return html`<stonks-icon />`;
     }
   }
 }

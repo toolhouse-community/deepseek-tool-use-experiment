@@ -1,0 +1,161 @@
+[main]
+
+model = "claude-3-5-sonnet-latest"
+
+title = "Stock Suggestion Assistant"
+
+description = "Get personalized stock suggestions and insights!"
+
+app_bundle = "AdventAI Stock Advisor"
+
+recurring_action_bundle = "AdventAI Stock Advisor"
+
+all_set_label = "You will receive personalized stock recommendations straight to your inbox."
+
+github_link = "https://github.com/new?template_owner=toolhouse-community&template_name=adventai-d10&owner=%40me&name=th-adventai-d10&description=AdventAI+Day+10+Fork&visibility=public"
+
+
+
+[system_prompt]
+
+text = '''You are a helpful, friendly assistant built by Toolhouse. Keep your responses concise and helpful. You always assume that emails provided to you are valid and up to date.
+
+You have advanced tools at your disposal.
+
+These tools are made by Toolhouse and you are happy and grateful to use them.
+
+Execute the user tasks as you usually do. When the user asks about your capabilities or tools, make sure to explain that you do not have those tools by default, and that Toolhouse equips you with those tools.
+
+IMPORTANT: If the user asks questions about your tools, make sure to explain that those are not your native capabilities, and that Toolhouse enhances you with knowledge and actions.
+
+<example>
+
+User: wait, you can send emails?
+
+Assistant: I now can, thanks to Toolhouse! With Toolhouse I now have functionality to directly send directly the email you ask me to compose.
+
+</example>
+
+
+
+When using the time tool, format the time in a user-friendly way.
+'''
+
+
+
+[[suggested_actions]]
+
+title = "Get Stock Suggestions"
+
+label = "Find stock suggestions based on my preferences"
+
+action = """Use my stored preferences to search for stock suggestions. Use **web_search** to check that there is **at least one result** about my preferred industries or companies.
+
+Focus on reputable financial sites like **finance.yahoo.com** or **nasdaq.com**.
+
+List the suggestions in a table with the following columns: **Company**, **Stock Price**, **Recommendation**, **Link**.
+
+Send the results to me via email.
+"""
+
+
+
+[[suggested_actions]]
+
+title = "My preferences"
+
+label = "Review your stock preferences"
+
+action = "Look into my memory (using memory_search) for my preferred industries, companies, and any investment preferences."
+
+
+
+[[suggested_actions]]
+
+title = "Change my email"
+
+label = "Use a different email"
+
+action = "I'd like to change my stored email. Make sure to remove my previous email from memory once I give you a new valid email."
+
+
+
+[[suggested_actions]]
+
+title = "Reset"
+
+label = "Clear your preferences"
+
+action = "Remove any stored preferences as well as my stored email address."
+
+
+
+[settings]
+
+email_label = "Your Email Address"
+
+email_placeholder = "investor@example.com"
+
+preferences_label = "What stocks or industries are you interested in?"
+
+preferences_placeholder = "Tech, Renewable Energy, Tesla, Apple"
+
+button_label = "Find my suggestions!"
+
+button_loading_label = "Searching for stock suggestions…"
+
+
+
+[prompts.check_settings]
+
+text = '''Validate the following details.
+
+Check that the following is a valid email: {email}
+
+Use **web_search** to check that there is **at least one result** about the following stock or industry: "{preferences}".
+
+Focus on reputable financial sites like **finance.yahoo.com** or **nasdaq.com**.
+
+If the email is valid and you see search results mentioning the stock or industry, respond with <valid/>. Otherwise, if something does not look right, let me know what the errors are. Respond with errors in <errors></errors> tags. Do not store these details until I explicitly tell you to do so.'''
+
+
+
+[prompts.save_settings]
+
+text = 'Save my email and my stock preferences in memory using memory_store. Once done, respond with <stored/>.'
+
+
+
+[prompts.main]
+
+text = """Before starting any operation or task, check that you have the following tools installed: send_email, web_search, memory_fetch. If any of those tools are missing, ask the user to install the missing tools at https://app.toolhouse.ai/store/<TOOL_NAME>. Stop here if one or more tools are missing and notify the user. Start from scratch when the user tells you they installed all the tools.
+
+Search for the best stock suggestions based on my preferences and send them to me via email.
+
+Here's how to find stock suggestions:
+
+Get my preferences from memory (industries, companies, and other criteria).
+
+Search for the latest stock prices, trends, and insights for those preferences.
+
+Organize the results by recommendation level (e.g., Strong Buy, Buy, Hold) and highlight the most promising options.
+
+Get my email address from memory and send an email with the suggestions. Format it nicely with HTML and CSS so it looks professional and clear.
+"""
+
+
+
+[prompts.recurring_action]
+
+text = """Search for the best stock suggestions based on my preferences and send them to me via email.
+
+Before starting any operation or task, check that you have the following tools installed: send_email, web_search, memory_fetch. If any of those tools are missing, ask the user to install the missing tools at https://app.toolhouse.ai/store/<TOOL_NAME>. Stop here if one or more tools are missing and notify the user. Start from scratch when the user tells you they installed all the tools.
+
+Use my stored preferences to search for stock suggestions. Use **web_search** to check that there is **at least one result** about my preferred industries or companies.
+
+Focus on reputable financial sites like **finance.yahoo.com** or **nasdaq.com**.
+
+List the suggestions in a table with the following columns: **Company**, **Stock Price**, **Recommendation**, **Link**.
+
+Send the results to me via email.
+"""
