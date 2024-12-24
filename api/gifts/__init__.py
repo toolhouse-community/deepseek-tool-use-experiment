@@ -3,7 +3,7 @@ from starlette.responses import JSONResponse
 from starlette.status import HTTP_404_NOT_FOUND
 from helpers import read_config
 from datetime import datetime
-
+import traceback
 
 apps = [
     "mealplanner",
@@ -16,7 +16,7 @@ apps = [
     "chef-boss",
     "deal-finder",
     "stonks-simulator",
-    "wwwed",
+    "wwed",
     "real-estate-bot",
 ]
 
@@ -39,5 +39,4 @@ async def get(request: Request):
 
         return JSONResponse(out)
     except Exception as e:
-        print(e)
         return JSONResponse({}, status_code=HTTP_404_NOT_FOUND)
