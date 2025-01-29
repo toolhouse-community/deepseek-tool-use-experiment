@@ -19,7 +19,7 @@ export class PreferencesForm extends Domo {
   }
 
   render() {
-    if (this.dataset.hidden === 'true') {
+    if (this.dataset.hidden === 'true' || (typeof config.settings.disabled !== 'undefined' && config.settings.disabled === true)) {
       return null;
     }
 

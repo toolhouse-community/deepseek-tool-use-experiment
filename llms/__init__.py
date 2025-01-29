@@ -4,22 +4,14 @@ import traceback
 from openai import OpenAI
 from anthropic import Anthropic
 from toolhouse import Toolhouse, ToolhouseStreamStorage, stream_to_chat_completion
-
-system_prompt = """You are a helpful assistant built by Toolhouse. You have advanced tools at your disposal:
-
-These tools are made by Toolhouse and you are happy and grateful to use them.
-
-Execute the user tasks as you usually do. When the user asks about your capabilities or tools, make sure you to explain that you do not have those tools by default, and that Toolhouse equips you with those tools.
-
-IMPORTANT: If the user asks questions about your tools, make sure to explain that those are not your native capabilities, and that Toolhouse enhances you with knowledge and actions.
-<example>
-User: wait, you can send emails?
-Assistant: I now can, thanks to Toolhouse! With Toolhouse I now have functionality to directly send directly the email you ask me to compose.
-</example>
-
-When using the time tool, format the time in a user friendly way."""
+from helpers.experimental import system_prompt, run_tool, find_tool_use
 
 models = {
+    "DeepSeek R1": {
+        "provider": "openai",
+        "host": "groq",
+        "model": "deepseek-r1-distill-llama-70b",
+    },
     "Claude 3.5 Sonnet": {
         "provider": "anthropic",
         "host": "anthropic",
@@ -179,39 +171,26 @@ def call_anthropic(**kwargs):
 
 
 def call_groq(**kwargs):
+    args = kwargs.copy()
     client = OpenAI(
         api_key=os.environ.get("GROQCLOUD_API_KEY"),
         base_url="https://api.groq.com/openai/v1",
     )
 
-    if kwargs.get("tools"):
-        sys_prompt = [{"role": "system", "content": system_prompt}]
-    else:
-        sys_prompt = [
-            {
-                "role": "system",
-                "content": "You are a helpful assistant built by Toolhouse. If the user asks you to perform a task for which you don't have a tool, you must politely decline the request.",
-            }
+    args = kwargs.copy()
+
+    if not next((m["role"] == "system" for m in args["messages"]), None):
+        args["messages"] = [{"role": "system", "content": args.get("system")}] + args[
+            "messages"
         ]
 
-    msgs = kwargs.get("messages", []).copy()
-    if not next((m["role"] == "system" for m in msgs), None):
-        msgs = sys_prompt + msgs
+    if args.get("system"):
+        args["messages"] = [{"role": "system", "content": args.get("system")}] + args[
+            "messages"
+        ]
+        del args["system"]
 
-    messages = sys_prompt
-    for message in msgs:
-        msg = message.copy()
-        if "function_call" in msg:
-            del msg["function_call"]
-
-        if "tool_calls" in msg and msg["tool_calls"] is None:
-            del msg["tool_calls"]
-
-        messages.append(msg)
-
-    kwargs["messages"] = messages
-
-    return client.chat.completions.create(**kwargs)
+    return client.chat.completions.create(**args)
 
 
 def call_together(**kwargs):
@@ -305,9 +284,7 @@ async def generate_stream(
         current_messages = messages.copy()
         history = messages.copy()
         provider = get_model(model).get("provider")
-        th = Toolhouse(provider=provider)
-        if email:
-            th.set_metadata("id", email)
+        th = Toolhouse(provider="anthropic")
 
         tools = th.get_tools(bundle)
         tool_results = []
@@ -315,11 +292,11 @@ async def generate_stream(
         while True:
             with llm_call(
                 model=model,
-                system="Respond directly, do not preface or end your responses with anything.",
+                system=system_prompt(tools),
                 max_tokens=8192,
                 messages=current_messages,
-                tools=tools,
                 stream=True,
+                stop="</tool_use>",
             ) as stream:
                 response = None
                 async for chunk in (
@@ -332,12 +309,23 @@ async def generate_stream(
                     else:
                         response = chunk
 
-                # Run tools on the response
-                tool_results = th.run_tools(response)
+                response = stream_to_chat_completion(response)
+                tool_results.append(
+                    {
+                        "role": "assistant",
+                        "content": response.choices[0].message.content,
+                    }
+                )
 
-                # If no more tool results, break the loop
-                if not tool_results:
-                    break
+                if tool_call := find_tool_use(response.choices[0].message.content):
+                    print("Using tool:", tool_call.get("tool_name"))
+                    tool_response = run_tool(tool_call)
+                    tool_results.append(
+                        {
+                            "role": "user",
+                            "content": f"Response from {tool_call.get("tool_name")}: {tool_response.get("content").get("content")}",
+                        }
+                    )
 
                 if provider == "anthropic":
                     tool_results = process_anthropic_tool_results(tool_results, history)
@@ -346,7 +334,14 @@ async def generate_stream(
 
                 # Update messages for next iteration
                 current_messages.extend(tool_results)
-        yield format_event("end", sanitize_history(history, provider))
+
+                if (
+                    len(history) > 0
+                    and history[-1].get("role") == "assistant"
+                    and response.choices[0].finish_reason == "stop"
+                ):
+                    yield format_event("end", sanitize_history(history, provider))
+                    return
     except Exception as e:
         traceback.print_exc()
         yield str(e)

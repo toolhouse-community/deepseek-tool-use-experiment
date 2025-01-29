@@ -53,6 +53,13 @@ export class ChatHistoryContainer extends Domo {
 
   makeHtmlOpenAI({ role, content, tool_calls}) {
     if (content) {
+      if (role === 'assistant') {
+        if (content.includes('<think>') && content.includes('</think>')) {
+          content = content.replace(/<think>.*?<\/think>/gs, '').trim();
+        } else if (content.includes('<think>')) {
+          content = content.trim().replace(/<think>.*$/gs, '').trim();
+        }
+      }
       return html`<div class="${this.cssClassNames(role, content)}">${this.md.makeHtml(content)}</div>`;
     } else if (Array.isArray(tool_calls)) {
       const bubbles = tool_calls.map((c) =>

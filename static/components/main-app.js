@@ -74,7 +74,11 @@ export class MainApp extends Domo {
     return this.state.messages;
   }
   getStreamingResponse() {
-    return this.state.streamingResponse;
+    if (this.state.streamingResponse.includes("<think>") && this.state.streamingResponse.includes("</think>")) {
+      return this.state.streamingResponse.replace(/<think>.*?<\/think>/gs, "").trim();
+    } if (this.state.streamingResponse.includes("<think>")) {
+      return "";
+    }
   }
   thinking() {
     return this.state.thinking;
@@ -94,22 +98,10 @@ export class MainApp extends Domo {
 
   render() {
     return html`
-      <p>
-        <a href="/">← AdventAI 🎁</a>
-      </p>
       <div style="display: flex">
-        <generic-icon icon="${config.app_name}" style="margin-right: 1em " />
         <h1 style="flex:1">${config.main.title}</h1>
       </div>
 
-      <p>${config.main.description}</p>
-      <p>
-        <a target="_blank" href="${config.main.github_link}">Clone this app</a>
-        |
-        <a target="_blank" href="https://app.toolhouse.ai/sign-up"
-          >Sign up for Toolhouse (it's free!)</a
-        >
-      </p>
       <preferences-form
         data-hidden="${this.state.formIsHidden ||
         this.state.configured ||
