@@ -53,44 +53,35 @@
     </pre>
     <p>Your browser hallucinated.</p>
     <div>
-      <a href="/">Back to AdventAI</a> | <a href="https://app.toolhouse.ai">Back to Toolhouse</a>
+      <a href="https://app.toolhouse.ai">Back to Toolhouse</a>
     </div>
   </main>
   <script type="module">
     import {init} from '/app/domo.js';
-    window.config = {};
-    try {
-      const response = await fetch('/api/config');
-      if (!response.ok) {
-        throw new Error(`${response.status} ${response.statusText}`)
-      }
-      window.config = await response.json();
-      init(document.querySelector('main-app'));
-    } catch (e) {
-      document.getElementsByTagName('main-app')[0].style.display = 'none';
-      const error = document.getElementById('error');
-      error.classList.remove('hidden');
-      function requestAnimationFrameTimeout(callback, delay) {
-        let start = null;
-        function loop(timestamp) {
-          if (!start) start = timestamp;
-          const progress = timestamp - start;
-          if (progress < delay) {
-            requestAnimationFrame(loop);
-          } else {
-            callback();
-          }
-        }
-        requestAnimationFrame(loop);
-      }
+    init(document.querySelector('main-app'));
+    // document.getElementsByTagName('main-app')[0].style.display = 'none';
+    // const error = document.getElementById('error');
+    // error.classList.remove('hidden');
+    // function requestAnimationFrameTimeout(callback, delay) {
+    //   let start = null;
+    //   function loop(timestamp) {
+    //     if (!start) start = timestamp;
+    //     const progress = timestamp - start;
+    //     if (progress < delay) {
+    //       requestAnimationFrame(loop);
+    //     } else {
+    //       callback();
+    //     }
+    //   }
+    //   requestAnimationFrame(loop);
+    // }
 
-      let timer = 1;
-      for (const element of error.children) {
-        requestAnimationFrameTimeout(() => {
-          element.classList.add('fade-in', 'slow');
-        }, timer);
-        timer += 1400;
-      }
-    }
+    // let timer = 1;
+    // for (const element of error.children) {
+    //   requestAnimationFrameTimeout(() => {
+    //     element.classList.add('fade-in', 'slow');
+    //   }, timer);
+    //   timer += 1400;
+    // }
   </script>
 </html>

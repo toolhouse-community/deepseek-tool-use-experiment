@@ -8,8 +8,6 @@ from starlette.middleware import Middleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from helpers import read_config
 import api.chat
-import api.config
-import api.gifts
 import dotenv
 import os
 import pathlib
@@ -77,13 +75,6 @@ app = Starlette(
     middleware=middleware,
     routes=[
         Route("/api/chat", api.chat.post, methods=["POST"]),
-        Route("/api/config", api.config.get, methods=["GET"]),
-        Route("/api/gifts", api.gifts.get, methods=["GET"]),
         Route("/app/{path:path}", serve_static),
-        Mount(
-            "/",
-            StaticFiles(directory="adventai", html=True),
-            name="adventai",
-        ),
     ],
 )

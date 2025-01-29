@@ -66,10 +66,10 @@ def find_tool_use(response):
 
     start = index + len("<tool_use>")
     out = response[start:stop].strip()
-    print(out)
-    j = json.loads(out)
+    try:
+        j = json.loads(out)
 
-    if j.get("function_calls"):
-        return j.get("function_calls")[0]
-
-    return None
+        if j.get("function_calls"):
+            return j.get("function_calls")[0]
+    except:
+        return None

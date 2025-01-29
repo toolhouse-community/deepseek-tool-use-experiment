@@ -9,15 +9,13 @@ export class MainApp extends Domo {
 
   getInitialState() {
     this.setupStream();
-    document.title = config.main.title;
     const state = {
       messages: [],
       thinking: false,
       streamingResponse: "",
       formIsHidden: false,
-      email: localStorage.getItem(config.app_name + "-email") ?? "",
-      configured:
-        !!localStorage.getItem(config.app_name + "-configured") || false,
+      email: "",
+      configured: false,
     };
 
     return state;
@@ -36,19 +34,7 @@ export class MainApp extends Domo {
       const messages = JSON.parse(event.detail);
       const lastMessage = JSON.stringify(messages.at(-1));
       this.setState({ streamingResponse: "", messages: messages });
-      if (lastMessage.includes("<valid/>")) {
-        localStorage.setItem(config.app_name + "-email", this.state.email);
-        this.handleMessageSubmission(config.prompts.save_settings.text);
-      } else if (lastMessage.includes("<stored/>")) {
-        localStorage.setItem(config.app_name + "-configured", "true");
-        this.setState({ configured: true });
-      }
     });
-
-    // TODO: implement error
-    // this.processor.addEventListener('error', (event) => {
-    //   // console.error('Error occurred:', event.detail);
-    // });
   }
 
   handleMessageSubmission(value) {
@@ -63,9 +49,6 @@ export class MainApp extends Domo {
       messages: this.state.messages,
     };
 
-    if (localStorage.getItem(config.app_name + "-email")) {
-      postData.email = localStorage.getItem(config.app_name + "-email");
-    }
     console.log(postData);
     this.processor.processStream(postData);
   }
@@ -85,11 +68,6 @@ export class MainApp extends Domo {
   }
 
   submitPreferences({ email, preferences }) {
-    const prompt = config.prompts.check_settings.text
-      .replace("{email}", email)
-      .replace("{preferences}", preferences);
-    this.setState({ formIsHidden: true, email: email });
-    this.handleMessageSubmission(prompt);
   }
 
   componentDidRender() {
@@ -99,20 +77,13 @@ export class MainApp extends Domo {
   render() {
     return html`
       <div style="display: flex">
-        <h1 style="flex:1">${config.main.title}</h1>
+        <toolhouse-icon />
+        <h1 style="flex:1">DeepSeek + Toolhouse</h1>
       </div>
 
-      <preferences-form
-        data-hidden="${this.state.formIsHidden ||
-        this.state.configured ||
-        this.state.messages.length > 0}"
-        cb-submit=${this.submitPreferences}
-      />
       ${this.state.configured && this.firstRender ? `<success-message />` : ""}
       <chat-history-container
-        data-provider="${config.main.model.indexOf("claude") > -1
-          ? "anthropic"
-          : "openai"}"
+        data-provider="openai"
         data-len="${this.state.messages.length}"
         cb-thinking=${this.thinking}
         cb-get-history=${this.getMessages}

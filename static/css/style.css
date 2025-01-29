@@ -322,9 +322,10 @@ action-box button b {
   color: #fff;
 }
 
-generic-icon svg {
+toolhouse-icon svg {
   color: #08f;
   width: 2em;
+  margin-right: 1rem
 }
 
 main#error {

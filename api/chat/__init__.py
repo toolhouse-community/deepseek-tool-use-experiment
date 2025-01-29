@@ -21,14 +21,8 @@ async def post(request: Request):
             yield_error("JSON Decode Error"), media_type="text/plain", status_code=400
         )
 
-    name = get_app_name(request)
-    if not (config := read_config(f"./prompts/{name}.toml")):
-        return StreamingResponse(
-            yield_error("Configuration not found"),
-            media_type="text/plain",
-            status_code=404,
-        )
-    model = data.get("model") or config.get("main").get("model")
+    name = "Simplechat"
+    model = "deepseek-r1-distill-llama-70b"
 
     if not model:
         return StreamingResponse(
