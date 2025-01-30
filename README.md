@@ -1,33 +1,66 @@
-# AdventAI 2024 Use Cases 🎄🎁
+# DeepSeek R1 + Toolhouse Function Calling Proof Of Concept
 
-This repo contains the AdventAI 2024 use cases built by Toolhouse.
+This repo contains a proof-of-concept apps that demonstrates how to enable function calling on DeepSeek using [Toolhouse](https://app.toolhouse.ai) as the function calling infrastructure.
 
-This app uses Python 3.12 and Starlette on the backend, and has no dependencies on the frontend.
+[Sign up for Toolhouse](https://toolhouse.ai) (it's free)
 
-**We encourage you to try out all these apps, clone them, and make them yours!**
+**Note:** this app is experimental and not intended for production use cases. Its sole purpose is to demonstrate DeepSeek's ability to leverage function calling using common prompt techniques.
 
-## Apps
+This demo uses `deepseek-r1-distill-lama` as provided by [Groq](https://console.groq.com?utm_source=toolhouse).
 
-Here are our apps
+## How does it work?
 
-- Meal planner
-  - Requires send_email, memory_fetch, memory_store, current_time
-- X Digest
-  - Requires send_email, memory_fetch, memory_store, search_X
-- News Digest
-  - Requires send_email, memory_fetch, memory_store, newswire, image_generation_flux
-- Random pet fact
-  - Requires send_email, memory_fetch, memory_store
+We use a common system prompt to instruct DeepSeek that it has tools at its disposal. We list the tools and we give DeepSeek precise instructions on how to call a tool:
 
-## How to deploy these apps
+```
+In this environment you will have access to a set of tools you can use to help answer the user's question.
 
-These apps can deploy on any service that can host Python 3.12. For convenience, we made it easy to deploy on Heroku and Render.
+You can call them like this:
+<tool_use>
+{
+    "function_calls": [
+        {
+            "tool_name": "$TOOL_NAME",
+            "parameters": {"$PARAMETER_NAME": "$PARAMETER_VALUE"},
+        }
+    ]
+}
+</tool_use>
+
+Here are the tools available:
+{LIST_OF_TOOLHOUSE_TOOLS}
+
+Make sure to call one tool at a time. Make sure to respect the parameter type, ensuring to wrap string values in quotes, and leaving numeric values unwrapped. Feel free to use as many tools as you need.
+
+If you can't find the right tool for your purpose, say "I'm sorry, I don't have the right tools in my toolbelt to answer that question".
+
+The user will give you a response from the tool in a message that begins with "Response from tool:". When you see that string, treat it as the tool response.
+```
+
+Because there isn't a specific `tool` role, we instructed the model to treat specific user messages as user tools results.
+
+On each completion call, a function inspects the contents of the `assistant` message and looks for a valid function call. When detected, the function parses the call (including its arguments) and passes it to Toolhouse to run it. Toolhouse runs the tool and returns the result back to the code. From that point, the code gets the response from Toolhouse and formats it as a tool response by prepending `Response from tool:` to the tool response.
+
+## Is that it? I heard DeepSeek R1 is bad at function calling
+
+While our tests confirm DeepSeek R1's function calling is not on par with leading models, Groq's version performs surprisingly well at completing simple tasks. Here are some findings from our early limited testing:
+
+- The model shows reasonable performance in selecting the right tools. 
+- The model had a ~84% rate in selecting the expected tool for each task at hand.
+- The model tries to avoid selecting tools. In other words, DeepSeek may not select a tool when instead it should select it. We believe this can be mitigated by adding specific prompt directives, but we haven't explored this further.
+- The model's thinking step leads it to hallucinate. For example, while using the `current_time` tool, we discovered that the model tricked itself into thinking that it made a tool call, and generated a tool response with a wrong timestamp answer. This happens consistently.
+- The model does not exhibit agentic capabilities that allows it to perform multiple-turn tool calls.
+- The model generates structured tool calls reliably in the format we specified.
+- We have yet to encounter issues like parameter hallucination, which affected leading models and smaller-parameter models.
+
 
 ## How to run on your environment
 
 ### Prerequisites
 
-- Python 3.12.7
+- A Toolhouse API key. You can get a free API key plus 500 free execution every month when you [sign up for Toolhouse](https://app.toolhouse.ai).
+- A Groq API Key. You can get a free API key on their [developer console](https://console.groq.com?utm_source=toolhouse).
+- Python 3.12
 - Poetry
 
 #### Setup
@@ -38,7 +71,7 @@ poetry install
 
 #### Run
 
-To run on http://0.0.0.0:8000
+To run on http://0.0.0.0:8000/app/deepseek
 
 ```bash
 hypercorn main:app --bind 0.0.0.0:8000
@@ -61,17 +94,4 @@ Each app has this:
 - **main.py** is the main entry point. It sets up the API routes and serves static content.
 - **api** contains the backend endpoints:
   - **api/chat** streams responses to the LLM you choose
-  - **api/cron** contains the logic to perform actions every day
-  - **api/config** will read the configuration for the app you want and serve it back to the frontend
 - **static** contains the frontend
-- **prompts** contains the prompts needed by each use case, as well as the UI configuration
-
-Here is how an app gets loaded:
-
-- Each app will be served at `/app/<your_app_name>`, where `<your_app_name>` must match one of the filenames in the `prompts` folder (for example `/app/random-pet-fact`).
-- The frontend will call `/app/config`. The backend will look at the referer header to infer the app name. It will then send the appropriate configuration. For example, if you're calling `/app/random-pet-fact`, `/app/config` will open `prompts/random-pet-fact.toml`, covert it to JSON, and serve it to the frontend.
-- The frontend will read the configuration and set itself up.
-
-#### How to build a new use case
-
-Most of the work is already done for you! Simply copy `prompts/_template.toml` and fill in the blanks. You can follow one of the other pre-configured configurations for inspiration.
