@@ -1,8 +1,11 @@
 # DeepSeek R1 + Toolhouse Function Calling Proof Of Concept
 
-This repo contains a proof-of-concept apps that demonstrates how to enable function calling on DeepSeek using [Toolhouse](https://app.toolhouse.ai) as the function calling infrastructure.
+This repo contains a proof-of-concept app that demonstrates how to enable function calling on DeepSeek using [Toolhouse](https://app.toolhouse.ai) as the function calling infrastructure.
 
-[Sign up for Toolhouse](https://toolhouse.ai) (it's free)
+![groq](https://github.com/user-attachments/assets/1ab7d578-6048-424d-9949-c7af160fdf32)
+
+
+**[Sign up for Toolhouse](https://toolhouse.ai) (it's free)**
 
 **Note:** this app is experimental and not intended for production use cases. Its sole purpose is to demonstrate DeepSeek's ability to leverage function calling using common prompt techniques.
 
