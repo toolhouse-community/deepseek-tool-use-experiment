@@ -9,7 +9,7 @@ This repo contains a proof-of-concept app that demonstrates how to enable functi
 
 **Note:** this app is experimental and not intended for production use cases. Its sole purpose is to demonstrate DeepSeek's ability to leverage function calling using common prompt techniques.
 
-This demo uses `deepseek-r1-distill-lama` as provided by [Groq](https://console.groq.com?utm_source=toolhouse).
+This demo uses `deepseek-r1-distill-llama` as provided by [Groq](https://console.groq.com?utm_source=toolhouse).
 
 ## How does it work?
 
